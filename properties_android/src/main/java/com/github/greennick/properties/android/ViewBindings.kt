@@ -58,7 +58,7 @@ fun CompoundButton.bindChecked(property: BooleanProperty): Subscription =
 fun View.bindEnabled(property: BooleanProperty): Subscription =
     property.subscribe(::setEnabled)
 
-fun EditText.bindError(property: Property<String?>): Subscription =
+fun EditText.bindError(property: Property<out String?>): Subscription =
     property.subscribe {
         error = it
         requestFocus()
