@@ -17,6 +17,6 @@ repositories {
 **Step 2.** Add the dependency
 ```
 dependencies {
-    implementation 'com.github.green-nick:properties-android:0.9'
+    implementation 'com.github.green-nick:properties-android:{latest version}'
 }
 ```
