@@ -78,23 +78,19 @@ fun TextView.bindTextBidirectionally(property: MutableProperty<String>): Subscri
 
 fun AdapterView<*>.bindSelectionBidirectionally(property: MutableProperty<Int>): Subscription {
     val subscription = property.subscribe {
-        println("Property value $it, adapter has ${adapter.count} items")
         if (it >= 0 && adapter.count >= it) setSelection(it)
     }
 
     onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-            println("Property selected $position")
             property.set(position)
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
-            println("Property nothing selected")
             property.set(-1)
         }
     }
     subscription.onUnsubscribe {
-        println("Property unsubscribing")
         onItemSelectedListener = null
     }
     return subscription
