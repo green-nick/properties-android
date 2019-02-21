@@ -40,7 +40,7 @@ fun SeekBar.bindProgressBidirectionally(property: MutableProperty<Int>): Subscri
 
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
             if (fromUser) {
-                property.set(progress)
+                property.value = progress
             }
         }
 
@@ -68,7 +68,7 @@ fun TextView.bindTextBidirectionally(property: MutableProperty<String>): Subscri
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            property.set(s?.toString().orEmpty())
+            property.value = s?.toString().orEmpty()
         }
     }
     addTextChangedListener(watcher)
@@ -83,11 +83,11 @@ fun AdapterView<*>.bindSelectionBidirectionally(property: MutableProperty<Int>):
 
     onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-            property.set(position)
+            property.value = position
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
-            property.set(-1)
+            property.value = -1
         }
     }
     subscription.onUnsubscribe {
@@ -98,7 +98,7 @@ fun AdapterView<*>.bindSelectionBidirectionally(property: MutableProperty<Int>):
 
 fun CompoundButton.bindCheckedBidirectionally(property: MutableProperty<Boolean>): Subscription {
     val subscription = property.subscribe(::setChecked)
-    setOnCheckedChangeListener { _, checked -> property.set(checked) }
+    setOnCheckedChangeListener { _, checked -> property.value = checked }
     subscription.onUnsubscribe { setOnCheckedChangeListener(null) }
     return subscription
 }
