@@ -1,4 +1,4 @@
-package com.github.green_nick.properties_android
+package com.github.greennick.properties.android
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -21,6 +21,6 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
 
-        assertEquals("com.github.green_nick.properties_android.test", appContext.packageName)
+        assertEquals("com.github.greennick.properties.android.test", appContext.packageName)
     }
 }

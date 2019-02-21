@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.github.green_nick.properties_android
+package com.github.greennick.properties.android
 
 import android.app.Dialog
 import android.text.Editable
