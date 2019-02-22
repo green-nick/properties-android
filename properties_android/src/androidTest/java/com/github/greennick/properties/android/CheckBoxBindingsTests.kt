@@ -1,15 +1,14 @@
 package com.github.greennick.properties.android
 
-import android.content.Context
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import android.widget.CheckBox
 import com.github.greennick.properties.propertyOf
 
 import org.junit.Test
+import org.junit.Assert.*
 import org.junit.runner.RunWith
 
-import org.junit.Assert.*
 import org.junit.Before
 
 /**
@@ -19,23 +18,70 @@ import org.junit.Before
  */
 @RunWith(AndroidJUnit4::class)
 class CheckBoxBindingsTests {
-    lateinit var context: Context
+    private lateinit var checkBox: CheckBox
 
     @Before
     fun initContext() {
-        context = InstrumentationRegistry.getTargetContext()
+        checkBox = CheckBox(InstrumentationRegistry.getTargetContext())
     }
 
     @Test
-    fun checkBox_checked_after_binding() {
-        val checked = true
-        val property = propertyOf(checked)
+    fun checkbox_checked_after_binding() {
+        val property = propertyOf(true)
 
-        val checkBox = CheckBox(context)
         checkBox.bindChecked(property)
 
-        val checkBoxChecked = checkBox.isChecked
+        assertTrue(checkBox.isChecked)
+    }
 
-        assertEquals(checked, checkBoxChecked)
+    @Test
+    fun checkbox_changed_checking() {
+        val property = propertyOf(true)
+
+        checkBox.bindChecked(property)
+
+        assertTrue(checkBox.isChecked)
+
+        property.value = false
+        assertFalse(checkBox.isChecked)
+    }
+
+    @Test
+    fun checkbox_stops_changing_after_unsubscribe() {
+        val property = propertyOf(true)
+
+        val subscription = checkBox.bindChecked(property)
+
+        property.value = false
+        assertFalse(checkBox.isChecked)
+
+        subscription.unsubscribe()
+        property.value = true
+        assertFalse(checkBox.isChecked)
+    }
+
+    @Test
+    fun checkbox_changes_property() {
+        val property = propertyOf(false)
+
+        checkBox.bindCheckedBidirectionally(property)
+
+        assertFalse(checkBox.isChecked)
+
+        checkBox.isChecked = true
+        assertTrue(property.value)
+    }
+
+    @Test
+    fun property_stop_changing_after_unsubscribe() {
+        val property = propertyOf(false)
+        val subscription = checkBox.bindCheckedBidirectionally(property)
+
+        checkBox.isChecked = true
+
+        subscription.unsubscribe()
+
+        checkBox.isChecked = false
+        assertTrue(property.value)
     }
 }
