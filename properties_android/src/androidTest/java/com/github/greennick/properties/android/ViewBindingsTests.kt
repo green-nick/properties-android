@@ -28,27 +28,22 @@ class ViewBindingsTests {
 
     @Test
     fun view_invisible_after_binding() {
-        val visible = false
-        val property = propertyOf(visible)
+        val property = propertyOf(false)
 
         val view = View(context)
         view.bindVisibility(property)
 
         val viewVisible = view.visibility == View.VISIBLE
-
-        assertEquals(visible, viewVisible)
+        assertFalse(viewVisible)
     }
 
     @Test
     fun view_disabled_after_binding() {
-        val enable = false
-        val property = propertyOf(enable)
+        val property = propertyOf(false)
 
         val view = View(context)
         view.bindEnabled(property)
 
-        val viewEnable = view.isEnabled
-
-        assertEquals(enable, viewEnable)
+        assertFalse(view.isEnabled)
     }
 }
