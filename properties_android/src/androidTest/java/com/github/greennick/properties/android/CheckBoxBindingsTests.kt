@@ -35,7 +35,7 @@ class CheckBoxBindingsTests {
     }
 
     @Test
-    fun checkbox_changed_checking() {
+    fun checkbox_checked_changing() {
         val property = propertyOf(true)
 
         checkBox.bindChecked(property)
