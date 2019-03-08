@@ -46,6 +46,20 @@ fun Dialog.bindVisibility(property: Property<Boolean>): Subscription =
 fun Dialog.bindVisibility(property: BooleanProperty): Subscription =
     property.subscribe { if (it) show() else dismiss() }
 
+fun Dialog.bindVisibilityBidirectionally(property: MutableBooleanProperty): Subscription {
+    val subscription = property.subscribe { if (it) show() else dismiss() }
+
+    setOnCancelListener { property.value = false }
+    setOnShowListener { property.value = true }
+
+    subscription.onUnsubscribe {
+        setOnCancelListener(null)
+        setOnShowListener(null)
+    }
+
+    return subscription
+}
+
 @Deprecated("Deprecated, use function with BooleanProperty instead")
 fun CompoundButton.bindChecked(property: Property<Boolean>): Subscription =
     property.subscribe(::setChecked)
