@@ -64,6 +64,9 @@ fun EditText.bindError(property: Property<String?>): Subscription =
         requestFocus()
     }
 
+fun ProgressBar.bindProgress(property: IntProperty): Subscription =
+    property.subscribe { progress = it }
+
 fun SeekBar.bindProgressBidirectionally(property: MutableIntProperty): Subscription {
     val subscription = property.subscribe {
         progress = it
