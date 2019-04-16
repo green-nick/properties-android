@@ -3,10 +3,11 @@ package com.github.greennick.properties.android
 import android.view.View
 import android.widget.AdapterView
 import com.github.greennick.properties.generic.MutableProperty
+import com.github.greennick.properties.generic.invoke
 import com.github.greennick.properties.subscriptions.Subscription
 
 fun AdapterView<*>.bindSelectionBidirectionally(property: MutableProperty<Int>): Subscription {
-    val subscription = property.subscribe {
+    val subscription = property {
         if (it >= 0 && adapter.count >= it) setSelection(it)
     }
 
@@ -19,8 +20,6 @@ fun AdapterView<*>.bindSelectionBidirectionally(property: MutableProperty<Int>):
             property.value = -1
         }
     }
-    subscription.onUnsubscribe {
-        onItemSelectedListener = null
-    }
+    subscription.onUnsubscribe { onItemSelectedListener = null }
     return subscription
 }

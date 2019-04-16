@@ -5,14 +5,13 @@ import android.text.TextWatcher
 import android.widget.TextView
 import com.github.greennick.properties.generic.MutableProperty
 import com.github.greennick.properties.generic.Property
+import com.github.greennick.properties.generic.invoke
 import com.github.greennick.properties.subscriptions.Subscription
 
-fun <T> TextView.bindText(property: Property<T>) = property.subscribe {
-    text = it?.toString().orEmpty()
-}
+fun <T> TextView.bindText(property: Property<T>) = property { text = it?.toString().orEmpty() }
 
 fun TextView.bindTextBidirectionally(property: MutableProperty<String>): Subscription {
-    val subscription = property.subscribe {
+    val subscription = property {
         if (text?.toString() != it) {
             text = it
         }
