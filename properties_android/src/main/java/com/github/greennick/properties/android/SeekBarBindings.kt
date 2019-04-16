@@ -2,13 +2,10 @@ package com.github.greennick.properties.android
 
 import android.widget.SeekBar
 import com.github.greennick.properties.generic.MutableProperty
-import com.github.greennick.properties.generic.invoke
 import com.github.greennick.properties.subscriptions.Subscription
 
 fun SeekBar.bindProgressBidirectionally(property: MutableProperty<Int>): Subscription {
-    val subscription = property {
-        progress = it
-    }
+    val subscription = bindProgress(property)
     setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
