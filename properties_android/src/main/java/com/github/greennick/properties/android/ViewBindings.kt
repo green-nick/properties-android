@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package com.github.greennick.properties.android
 
 import android.view.View
