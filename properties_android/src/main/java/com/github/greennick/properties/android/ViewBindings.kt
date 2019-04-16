@@ -11,9 +11,6 @@ import com.github.greennick.properties.subscriptions.Subscription
 fun View.bindVisibility(property: Property<Boolean>): Subscription =
     property.subscribe { visibility = if (it) View.VISIBLE else View.GONE }
 
-fun CompoundButton.bindChecked(property: Property<Boolean>): Subscription =
-    property.subscribe(::setChecked)
-
 fun View.bindEnabled(property: Property<Boolean>): Subscription =
     property.subscribe(::setEnabled)
 
@@ -64,12 +61,5 @@ fun AdapterView<*>.bindSelectionBidirectionally(property: MutableProperty<Int>):
     subscription.onUnsubscribe {
         onItemSelectedListener = null
     }
-    return subscription
-}
-
-fun CompoundButton.bindCheckedBidirectionally(property: MutableProperty<Boolean>): Subscription {
-    val subscription = property.subscribe(::setChecked)
-    setOnCheckedChangeListener { _, checked -> property.value = checked }
-    subscription.onUnsubscribe { setOnCheckedChangeListener(null) }
     return subscription
 }
