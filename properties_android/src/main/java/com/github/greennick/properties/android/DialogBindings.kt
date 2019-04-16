@@ -9,7 +9,7 @@ import com.github.greennick.properties.subscriptions.Subscription
 fun Dialog.bindVisibility(property: Property<Boolean>) = property { if (it) show() else dismiss() }
 
 fun Dialog.bindVisibilityBidirectionally(property: MutableProperty<Boolean>): Subscription {
-    val subscription = property { if (it) show() else dismiss() }
+    val subscription = bindVisibility(property)
 
     setOnCancelListener { property.value = false }
     setOnShowListener { property.value = true }
