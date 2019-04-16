@@ -14,27 +14,6 @@ fun View.bindVisibility(property: Property<Boolean>): Subscription =
 fun View.bindEnabled(property: Property<Boolean>): Subscription =
     property.subscribe(::setEnabled)
 
-fun SeekBar.bindProgressBidirectionally(property: MutableProperty<Int>): Subscription {
-    val subscription = property.subscribe {
-        progress = it
-    }
-    setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
-        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-            if (fromUser) {
-                property.value = progress
-            }
-        }
-
-        override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
-        override fun onStopTrackingTouch(seekBar: SeekBar) {}
-
-    })
-    subscription.onUnsubscribe { setOnSeekBarChangeListener(null) }
-    return subscription
-}
-
 fun AdapterView<*>.bindSelectionBidirectionally(property: MutableProperty<Int>): Subscription {
     val subscription = property.subscribe {
         if (it >= 0 && adapter.count >= it) setSelection(it)
