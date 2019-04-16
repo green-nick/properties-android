@@ -8,7 +8,7 @@ import com.github.greennick.properties.subscriptions.Subscription
 fun CompoundButton.bindChecked(property: Property<Boolean>) = property.subscribe(::setChecked)
 
 fun CompoundButton.bindCheckedBidirectionally(property: MutableProperty<Boolean>): Subscription {
-    val subscription = property.subscribe(::setChecked)
+    val subscription = bindChecked(property)
     setOnCheckedChangeListener { _, checked -> property.value = checked }
     subscription.onUnsubscribe { setOnCheckedChangeListener(null) }
     return subscription
