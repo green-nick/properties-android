@@ -14,12 +14,6 @@ fun View.bindVisibility(property: Property<Boolean>): Subscription =
 fun View.bindEnabled(property: Property<Boolean>): Subscription =
     property.subscribe(::setEnabled)
 
-fun EditText.bindError(property: Property<out String?>): Subscription =
-    property.subscribe {
-        error = it
-        requestFocus()
-    }
-
 fun SeekBar.bindProgressBidirectionally(property: MutableProperty<Int>): Subscription {
     val subscription = property.subscribe {
         progress = it
