@@ -9,36 +9,18 @@ import android.view.View
 import android.widget.*
 import com.github.greennick.properties.generic.MutableProperty
 import com.github.greennick.properties.generic.Property
-import com.github.greennick.properties.primitives.booleans.BooleanProperty
-import com.github.greennick.properties.primitives.booleans.MutableBooleanProperty
-import com.github.greennick.properties.primitives.doubles.DoubleProperty
-import com.github.greennick.properties.primitives.ints.IntProperty
-import com.github.greennick.properties.primitives.ints.MutableIntProperty
-import com.github.greennick.properties.primitives.longs.LongProperty
 import com.github.greennick.properties.subscriptions.Subscription
 
 fun <T> TextView.bindText(property: Property<T>): Subscription =
     property.subscribe { text = it?.toString().orEmpty() }
 
-fun <T> TextView.bindText(property: IntProperty): Subscription =
-    property.subscribe { text = it.toString() }
-
-fun <T> TextView.bindText(property: LongProperty): Subscription =
-    property.subscribe { text = it.toString() }
-
-fun <T> TextView.bindText(property: DoubleProperty): Subscription =
-    property.subscribe { text = it.toString() }
-
-fun <T> TextView.bindText(property: BooleanProperty): Subscription =
-    property.subscribe { text = it.toString() }
-
-fun View.bindVisibility(property: BooleanProperty): Subscription =
+fun View.bindVisibility(property: Property<Boolean>): Subscription =
     property.subscribe { visibility = if (it) View.VISIBLE else View.GONE }
 
-fun Dialog.bindVisibility(property: BooleanProperty): Subscription =
+fun Dialog.bindVisibility(property: Property<Boolean>): Subscription =
     property.subscribe { if (it) show() else dismiss() }
 
-fun Dialog.bindVisibilityBidirectionally(property: MutableBooleanProperty): Subscription {
+fun Dialog.bindVisibilityBidirectionally(property: MutableProperty<Boolean>): Subscription {
     val subscription = property.subscribe { if (it) show() else dismiss() }
 
     setOnCancelListener { property.value = false }
@@ -52,10 +34,10 @@ fun Dialog.bindVisibilityBidirectionally(property: MutableBooleanProperty): Subs
     return subscription
 }
 
-fun CompoundButton.bindChecked(property: BooleanProperty): Subscription =
+fun CompoundButton.bindChecked(property: Property<Boolean>): Subscription =
     property.subscribe(::setChecked)
 
-fun View.bindEnabled(property: BooleanProperty): Subscription =
+fun View.bindEnabled(property: Property<Boolean>): Subscription =
     property.subscribe(::setEnabled)
 
 fun EditText.bindError(property: Property<out String?>): Subscription =
@@ -64,10 +46,10 @@ fun EditText.bindError(property: Property<out String?>): Subscription =
         requestFocus()
     }
 
-fun ProgressBar.bindProgress(property: IntProperty): Subscription =
+fun ProgressBar.bindProgress(property: Property<Int>): Subscription =
     property.subscribe { progress = it }
 
-fun SeekBar.bindProgressBidirectionally(property: MutableIntProperty): Subscription {
+fun SeekBar.bindProgressBidirectionally(property: MutableProperty<Int>): Subscription {
     val subscription = property.subscribe {
         progress = it
     }
@@ -111,7 +93,7 @@ fun TextView.bindTextBidirectionally(property: MutableProperty<String>): Subscri
     return subscription
 }
 
-fun AdapterView<*>.bindSelectionBidirectionally(property: MutableIntProperty): Subscription {
+fun AdapterView<*>.bindSelectionBidirectionally(property: MutableProperty<Int>): Subscription {
     val subscription = property.subscribe {
         if (it >= 0 && adapter.count >= it) setSelection(it)
     }
@@ -131,7 +113,7 @@ fun AdapterView<*>.bindSelectionBidirectionally(property: MutableIntProperty): S
     return subscription
 }
 
-fun CompoundButton.bindCheckedBidirectionally(property: MutableBooleanProperty): Subscription {
+fun CompoundButton.bindCheckedBidirectionally(property: MutableProperty<Boolean>): Subscription {
     val subscription = property.subscribe(::setChecked)
     setOnCheckedChangeListener { _, checked -> property.value = checked }
     subscription.onUnsubscribe { setOnCheckedChangeListener(null) }
