@@ -11,6 +11,15 @@ import com.github.greennick.properties.subscriptions.Subscription
 fun <T> TextView.bindText(property: Property<T>): ListenableSubscription =
     property.subscribe { text = it?.toString().orEmpty() }
 
+fun TextView.bindTextId(property: Property<Int>): ListenableSubscription =
+    property.subscribe { setText(it) }
+
+fun TextView.bindHint(property: Property<out CharSequence>): ListenableSubscription =
+    property.subscribe { hint = it }
+
+fun TextView.bindHintId(property: Property<Int>): ListenableSubscription =
+    property.subscribe { setHint(it) }
+
 fun TextView.bindTextBidirectionally(property: MutableProperty<String>): Subscription {
     val subscription = property.subscribe {
         if (text?.toString() != it) {
