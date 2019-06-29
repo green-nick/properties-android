@@ -1,7 +1,7 @@
 package com.github.green_nick.savedstate
 
 import com.github.greennick.properties.generic.MutableProperty
-import kotlin.reflect.KProperty
+import kotlin.reflect.KProperty0
 
 interface SavedStateHolder {
 
@@ -13,6 +13,6 @@ fun <T, P : MutableProperty<T>> P.with(tag: String, savedState: SavedStateHolder
     return this
 }
 
-fun <P : MutableProperty<*>> SavedStateHolder.connect(kProperty: KProperty<P>) {
-    bind(kProperty.name, kProperty.call())
+fun <P : MutableProperty<*>> SavedStateHolder.connect(kProperty: KProperty0<P>) {
+    bind(kProperty.name, kProperty.get())
 }

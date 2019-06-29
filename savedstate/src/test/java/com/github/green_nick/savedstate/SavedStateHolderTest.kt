@@ -10,7 +10,8 @@ class SavedStateHolderTest {
     fun test() {
         val savedState = SavedStateHolderImpl(Strict.NONE)
 
-
         savedState.connect(::prop)
+
+        println(savedState)
     }
 }
