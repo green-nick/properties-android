@@ -11,13 +11,12 @@ import java.io.Serializable
 enum class Strict { NONE, SOFT, WARN, HARD }
 
 private const val logTag = "SavedStateHolder"
-private const val tagPrefix = "prop_saved_"
 
 class SavedStateHolderImpl(private val strictMode: Strict) : SavedStateHolder {
     private val boundProps = mutableMapOf<String, MutableProperty<*>>()
 
     override fun bind(tag: String, property: MutableProperty<*>) {
-        val contains = boundProps.contains(tagPrefix + tag)
+        val contains = boundProps.contains(tag)
         if (contains) {
             val message =
                 "SavedStateHolder: Property with tag $tag already exists. Don't put it again."
@@ -28,7 +27,7 @@ class SavedStateHolderImpl(private val strictMode: Strict) : SavedStateHolder {
                 Strict.HARD -> throw IllegalStateException(message)
             }.let {}
         } else {
-            boundProps[tagPrefix + tag] = property
+            boundProps[tag] = property
         }
     }
 
@@ -64,42 +63,43 @@ class SavedStateHolderImpl(private val strictMode: Strict) : SavedStateHolder {
         boundProps.forEach { (tag, prop) ->
             if (tag in keys) {
                 val value = bundle.get(tag)
-                try {
-                    when (value) {
-                        is Int -> (prop as MutableProperty<Int>).value = value
-                        is Long -> (prop as MutableProperty<Long>).value = value
-                        is String -> (prop as MutableProperty<String>).value = value
-                        is String? -> (prop as MutableProperty<String?>).value = value
-                        is CharSequence -> (prop as MutableProperty<CharSequence>).value = value
-                        is CharSequence? -> (prop as MutableProperty<CharSequence?>).value = value
-                        is Serializable -> (prop as MutableProperty<Serializable>).value = value
-                        is Serializable? -> (prop as MutableProperty<Serializable?>).value = value
-                        is Double -> (prop as MutableProperty<Double>).value = value
-                        is Float -> (prop as MutableProperty<Float>).value = value
-                        is Parcelable -> (prop as MutableProperty<Parcelable>).value = value
-                        is Parcelable? -> (prop as MutableProperty<Parcelable?>).value = value
-                        is Byte -> (prop as MutableProperty<Byte>).value = value
-                        is ByteArray -> (prop as MutableProperty<ByteArray>).value = value
-                        is ByteArray? -> (prop as MutableProperty<ByteArray?>).value = value
-                        is Short -> (prop as MutableProperty<Short>).value = value
-                        is ShortArray -> (prop as MutableProperty<ShortArray>).value = value
-                        is ShortArray? -> (prop as MutableProperty<ShortArray?>).value = value
-                        is IntArray -> (prop as MutableProperty<IntArray>).value = value
-                        is IntArray? -> (prop as MutableProperty<IntArray?>).value = value
-                        is LongArray -> (prop as MutableProperty<LongArray>).value = value
-                        is LongArray? -> (prop as MutableProperty<LongArray?>).value = value
-                        is FloatArray -> (prop as MutableProperty<FloatArray>).value = value
-                        is FloatArray? -> (prop as MutableProperty<FloatArray?>).value = value
-                        is DoubleArray -> (prop as MutableProperty<DoubleArray>).value = value
-                        is DoubleArray? -> (prop as MutableProperty<DoubleArray?>).value = value
-                        is Char -> (prop as MutableProperty<Char>).value = value
-                        is CharArray -> (prop as MutableProperty<CharArray>).value = value
-                        is CharArray? -> (prop as MutableProperty<CharArray?>).value = value
-                        else -> unsupportedTypeError(context, value)
-                    }.let {}
-                } catch (e: ClassCastException) {
-                    wrongValueInBundleError(context, tag, value)
-                }
+//                try {
+                when (value) {
+                    is Int -> (prop as MutableProperty<Int>).value = value
+                    is Long -> (prop as MutableProperty<Long>).value = value
+                    is String -> (prop as MutableProperty<String>).value = value
+                    is String? -> (prop as MutableProperty<String?>).value = value
+                    is CharSequence -> (prop as MutableProperty<CharSequence>).value = value
+                    is CharSequence? -> (prop as MutableProperty<CharSequence?>).value = value
+                    is Serializable -> (prop as MutableProperty<Serializable>).value = value
+                    is Serializable? -> (prop as MutableProperty<Serializable?>).value = value
+                    is Double -> (prop as MutableProperty<Double>).value = value
+                    is Float -> (prop as MutableProperty<Float>).value = value
+                    is Parcelable -> (prop as MutableProperty<Parcelable>).value = value
+                    is Parcelable? -> (prop as MutableProperty<Parcelable?>).value = value
+                    is Byte -> (prop as MutableProperty<Byte>).value = value
+                    is ByteArray -> (prop as MutableProperty<ByteArray>).value = value
+                    is ByteArray? -> (prop as MutableProperty<ByteArray?>).value = value
+                    is Short -> (prop as MutableProperty<Short>).value = value
+                    is ShortArray -> (prop as MutableProperty<ShortArray>).value = value
+                    is ShortArray? -> (prop as MutableProperty<ShortArray?>).value = value
+                    is IntArray -> (prop as MutableProperty<IntArray>).value = value
+                    is IntArray? -> (prop as MutableProperty<IntArray?>).value = value
+                    is LongArray -> (prop as MutableProperty<LongArray>).value = value
+                    is LongArray? -> (prop as MutableProperty<LongArray?>).value = value
+                    is FloatArray -> (prop as MutableProperty<FloatArray>).value = value
+                    is FloatArray? -> (prop as MutableProperty<FloatArray?>).value = value
+                    is DoubleArray -> (prop as MutableProperty<DoubleArray>).value = value
+                    is DoubleArray? -> (prop as MutableProperty<DoubleArray?>).value = value
+                    is Char -> (prop as MutableProperty<Char>).value = value
+                    is CharArray -> (prop as MutableProperty<CharArray>).value = value
+                    is CharArray? -> (prop as MutableProperty<CharArray?>).value = value
+                    else -> unsupportedTypeError(context, value)
+                }.let {}
+                prop.value.let {}
+//                } catch (e: ClassCastException) {
+//                    wrongValueInBundleError(context, tag, value)
+//                }
             }
         }
     }
