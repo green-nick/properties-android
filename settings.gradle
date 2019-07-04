@@ -1,1 +1,1 @@
-include ':binds', ':savedstate'
+include ':binds', ':bindsx'

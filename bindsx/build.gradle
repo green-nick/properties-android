@@ -6,15 +6,14 @@ group = 'com.github.green-nick'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "29.0.0"
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -29,9 +28,14 @@ repositories {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    implementation 'com.github.green-nick:properties:1.7.1'
+    implementation "com.github.green-nick:properties:1.7.1"
+    implementation project(":binds")
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "com.google.android.material:material:1.0.0"
+    implementation "androidx.fragment:fragment:1.1.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-runtime:2.0.0"
+
+    testImplementation "junit:junit:4.12"
+    androidTestImplementation "androidx.test:runner:1.2.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
 }
