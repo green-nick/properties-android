@@ -1,6 +1,5 @@
 package com.github.greennick.properties.android
 
-import android.app.Activity
 import android.view.View
 import android.widget.AdapterView
 import com.github.greennick.properties.generic.MutableProperty
@@ -23,6 +22,3 @@ fun AdapterView<*>.bindSelectionBidirectionally(property: MutableProperty<Int>):
     subscription.onUnsubscribe { onItemSelectedListener = null }
     return subscription
 }
-
-fun Activity.bindSelectionBidirectionally(id: Int, property: MutableProperty<Int>): Subscription =
-    findViewById<AdapterView<*>>(id).bindSelectionBidirectionally(property)
