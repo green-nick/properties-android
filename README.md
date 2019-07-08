@@ -129,12 +129,10 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 ```
-**Step 2.** Add the dependency
+**Step 2.** Add the dependencies
 ```
-implementation "com.github.green-nick:properties-android:{latest version}"
-```
-or separately:
-```
-implementation "com.github.green-nick.properties-android:binds{latest version}"
-implementation "com.github.green-nick:properties-android:bindsx{latest version}"
+implementation "com.github.green-nick.properties-android:binds:{latest version}"
+
+// if you also want bindsx extensions:
+implementation "com.github.green-nick.properties-android:bindsx:{latest version}"
 ```
