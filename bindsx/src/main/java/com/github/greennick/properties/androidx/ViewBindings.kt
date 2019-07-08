@@ -4,7 +4,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Lifecycle.Event.*
+import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
 import com.github.greennick.properties.android.*
 import com.github.greennick.properties.generic.Property
 
@@ -18,14 +18,16 @@ fun FragmentActivity.bindVisibility(
     bindTo: Lifecycle.Event = ON_DESTROY,
     invisibilityMode: Invisibility = Invisibility.GONE
 ): Unit =
-    view.bindVisibility(property, invisibilityMode).toEvent(this, bindTo)
+    view.bindVisibility(property, invisibilityMode)
+        .toEvent(this, bindTo)
 
 fun FragmentActivity.bindEnabled(
     view: View,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view.bindEnabled(property).toEvent(this, bindTo)
+    view.bindEnabled(property)
+        .toEvent(this, bindTo)
 
 fun FragmentActivity.bindVisibility(
     id: Int,
