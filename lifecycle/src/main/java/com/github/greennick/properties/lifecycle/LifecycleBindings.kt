@@ -1,4 +1,4 @@
-package com.github.greennick.properties.androidx
+package com.github.greennick.properties.lifecycle
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver

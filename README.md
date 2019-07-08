@@ -4,7 +4,7 @@ Small, lightweight library that allows to bind Android views and dialogs to prop
 Main purpose is binding `Views` to `ViewModels` in MVVM patterns.
 
 ## Usage:
-There is main project called `binds` and extension `bindsx` 
+There is main project called `binds` and extensions `bindsx`, `lifecycle`
 which supports androidx views and 
 such androidx-related functionality as binding `Subscription` to `LifecycleOwner`
 ### List of available bindings:
@@ -87,7 +87,9 @@ class UserActivity: Activity() {
     
     fun onCreate {
         setContentView(R.layout.activity_user)
-        subscription = bindText(R.id.user_email, viewModel.email)
+        
+        val emailField: TextView = findViewById(R.id.user_email)
+        subscription = emailField.bindText(viewModel.email)
         ...
     }
     
@@ -109,17 +111,17 @@ subscriptions.unsubscribe() // unscubscribe all added subscriptions
 ### Examples for `bindsx`:
 Use LifecycleOwner to automatically unsubscribe at appropriate lifecycle event:
 ```
-bindVisibility(emailField, vm.email).toEvent(this /* LifecycleOwner */, Lifecycle.Event.ON_DESTROY)
+emailField.bindVisibility(vm.email).toEvent(this /* LifecycleOwner */, Lifecycle.Event.ON_DESTROY)
 
 // or
 
-bindVisibility(emailField, vm.email).toDestroy(this /* LifecycleOwner */)
+emailField.bindVisibility(vm.email).toDestroy(this /* LifecycleOwner */)
 ```
-Besides that you can also use simplifier bindings (with View's id only):
+Besides that you can also use simplifier bindings:
 ```
 bindEnabled(R.id.email_field, vm.email, Lifecycle.Event.ON_DESTROY)
 ```
-This function automatically handles View finding and binding to proper lifecycle event.
+This function automatically handles View finding and binding to proper lifecycle event (`ON_DESTROY` is default one).
 ## How to add to Project:
 **Step 1.** Add the JitPack repository to your build file.  
 Add this in your module's build.gradle at the end of repositories:  
@@ -132,7 +134,8 @@ repositories {
 **Step 2.** Add the dependencies
 ```
 implementation "com.github.green-nick.properties-android:binds:{latest version}"
-
-// if you also want bindsx extensions:
 implementation "com.github.green-nick.properties-android:bindsx:{latest version}"
+
+// toEvent(...), toDestroy(...) and etc.
+implementation "com.github.green-nick.properties-android:lifecycle:{latest version}"
 ```

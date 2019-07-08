@@ -9,6 +9,7 @@ import com.github.greennick.properties.android.bindChecked
 import com.github.greennick.properties.android.bindCheckedBidirectionally
 import com.github.greennick.properties.generic.MutableProperty
 import com.github.greennick.properties.generic.Property
+import com.github.greennick.properties.lifecycle.toEvent
 
 /**
  * FragmentActivities section
