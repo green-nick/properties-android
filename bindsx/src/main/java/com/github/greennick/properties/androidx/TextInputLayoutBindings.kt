@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
 import com.github.greennick.properties.generic.Property
+import com.github.greennick.properties.lifecycle.toEvent
 import com.github.greennick.properties.subscriptions.ListenableSubscription
 import com.google.android.material.textfield.TextInputLayout
 

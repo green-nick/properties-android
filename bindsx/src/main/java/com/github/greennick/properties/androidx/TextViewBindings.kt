@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
 import com.github.greennick.properties.android.*
 import com.github.greennick.properties.generic.MutableProperty
 import com.github.greennick.properties.generic.Property
+import com.github.greennick.properties.lifecycle.toEvent
 
 /**
  * FragmentActivities section

@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
 import com.github.greennick.properties.android.bindSelectionBidirectionally
 import com.github.greennick.properties.generic.MutableProperty
+import com.github.greennick.properties.lifecycle.toEvent
 
 /**
  * FragmentActivities section
