@@ -4,94 +4,166 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
 import com.github.greennick.properties.android.*
 import com.github.greennick.properties.generic.MutableProperty
 import com.github.greennick.properties.generic.Property
+import com.github.greennick.properties.lifecycle.toEvent
 
 /**
  * FragmentActivities section
  */
 
 fun FragmentActivity.bindText(
+    textView: TextView,
+    property: Property<out Any?>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textView.bindText(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindTextId(
+    textView: TextView,
+    property: Property<Int>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textView.bindTextId(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindHint(
+    textView: TextView,
+    property: Property<out CharSequence?>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textView.bindHint(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindHintId(
+    textView: TextView,
+    property: Property<Int>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textView.bindHintId(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindTextBidirectionally(
+    textView: TextView,
+    property: MutableProperty<String>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textView.bindTextBidirectionally(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindText(
     id: Int,
     property: Property<out Any?>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindText(id, property).toEvent(this, bindTo)
+    bindText(findViewById<TextView>(id), property, bindTo)
 
 fun FragmentActivity.bindTextId(
     id: Int,
     property: Property<Int>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindTextId(id, property).toEvent(this, bindTo)
+    bindTextId(findViewById<TextView>(id), property, bindTo)
 
 fun FragmentActivity.bindHint(
     id: Int,
     property: Property<out CharSequence?>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHint(id, property).toEvent(this, bindTo)
+    bindHint(findViewById<TextView>(id), property, bindTo)
 
 fun FragmentActivity.bindHintId(
     id: Int,
     property: Property<Int>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHintId(id, property).toEvent(this, bindTo)
+    bindHintId(findViewById<TextView>(id), property, bindTo)
 
 fun FragmentActivity.bindTextBidirectionally(
     id: Int,
     property: MutableProperty<String>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindTextBidirectionally(id, property).toEvent(this, bindTo)
+    bindTextBidirectionally(findViewById<TextView>(id), property, bindTo)
 
 /**
  * Fragments section
  */
 
 fun Fragment.bindText(
+    textView: TextView,
+    property: Property<out Any?>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textView.bindText(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindTextId(
+    textView: TextView,
+    property: Property<Int>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textView.bindTextId(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindHint(
+    textView: TextView,
+    property: Property<out CharSequence?>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textView.bindHint(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindHintId(
+    textView: TextView,
+    property: Property<Int>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textView.bindHintId(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindTextBidirectionally(
+    textView: TextView,
+    property: MutableProperty<String>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textView.bindTextBidirectionally(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindText(
     id: Int,
     property: Property<out Any?>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<TextView>(id)
-        .bindText(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindText(view!!.findViewById<TextView>(id), property, bindTo)
 
 fun Fragment.bindTextId(
     id: Int,
     property: Property<Int>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<TextView>(id)
-        .bindTextId(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindTextId(view!!.findViewById<TextView>(id), property, bindTo)
 
 fun Fragment.bindHint(
     id: Int,
     property: Property<out CharSequence?>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<TextView>(id)
-        .bindHint(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindHint(view!!.findViewById<TextView>(id), property, bindTo)
 
 fun Fragment.bindHintId(
     id: Int,
     property: Property<Int>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<TextView>(id)
-        .bindHintId(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindHintId(view!!.findViewById<TextView>(id), property, bindTo)
 
 fun Fragment.bindTextBidirectionally(
     id: Int,
     property: MutableProperty<String>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<TextView>(id)
-        .bindTextBidirectionally(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindTextBidirectionally(view!!.findViewById<TextView>(id), property, bindTo)

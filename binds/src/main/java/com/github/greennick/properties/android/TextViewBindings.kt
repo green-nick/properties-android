@@ -1,6 +1,5 @@
 package com.github.greennick.properties.android
 
-import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.TextView
@@ -43,18 +42,3 @@ fun TextView.bindTextBidirectionally(property: MutableProperty<String>): Subscri
     subscription.onUnsubscribe { removeTextChangedListener(watcher) }
     return subscription
 }
-
-fun Activity.bindText(id: Int, property: Property<out Any?>): ListenableSubscription =
-    findViewById<TextView>(id).bindText(property)
-
-fun Activity.bindTextId(id: Int, property: Property<Int>): ListenableSubscription =
-    findViewById<TextView>(id).bindTextId(property)
-
-fun Activity.bindHint(id: Int, property: Property<out CharSequence?>): ListenableSubscription =
-    findViewById<TextView>(id).bindHint(property)
-
-fun Activity.bindHintId(id: Int, property: Property<Int>): ListenableSubscription =
-    findViewById<TextView>(id).bindHintId(property)
-
-fun Activity.bindTextBidirectionally(id: Int, property: MutableProperty<String>): Subscription =
-    findViewById<TextView>(id).bindTextBidirectionally(property)

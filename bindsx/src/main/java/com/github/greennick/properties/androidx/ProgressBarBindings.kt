@@ -4,29 +4,45 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
 import com.github.greennick.properties.android.bindProgress
 import com.github.greennick.properties.generic.Property
+import com.github.greennick.properties.lifecycle.toEvent
 
 /**
  * FragmentActivities section
  */
 
 fun FragmentActivity.bindProgress(
+    progressBar: ProgressBar,
+    property: Property<Int>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    progressBar.bindProgress(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindProgress(
     id: Int,
     property: Property<Int>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindProgress(id, property).toEvent(this, bindTo)
+    bindProgress(findViewById<ProgressBar>(id), property, bindTo)
 
 /**
  * Fragments section
  */
 
 fun Fragment.bindProgress(
+    progressBar: ProgressBar,
+    property: Property<Int>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    progressBar.bindProgress(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindProgress(
     id: Int,
     property: Property<Int>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<ProgressBar>(id)
-        .bindProgress(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindProgress(view!!.findViewById<ProgressBar>(id), property, bindTo)

@@ -4,29 +4,45 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
 import com.github.greennick.properties.android.bindError
 import com.github.greennick.properties.generic.Property
+import com.github.greennick.properties.lifecycle.toEvent
 
 /**
  * FragmentActivities section
  */
 
 fun FragmentActivity.bindError(
+    editText: EditText,
+    property: Property<out CharSequence?>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    editText.bindError(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindError(
     id: Int,
     property: Property<out CharSequence?>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindError(id, property).toEvent(this, bindTo)
+    bindError(findViewById<EditText>(id), property, bindTo)
 
 /**
  * Fragments section
  */
 
 fun Fragment.bindError(
+    editText: EditText,
+    property: Property<out CharSequence?>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    editText.bindError(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindError(
     id: Int,
     property: Property<out CharSequence?>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<EditText>(id)
-        .bindError(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindError(view!!.findViewById<EditText>(id), property, bindTo)

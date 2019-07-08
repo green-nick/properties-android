@@ -1,6 +1,5 @@
 package com.github.greennick.properties.android
 
-import android.app.Activity
 import android.widget.SeekBar
 import com.github.greennick.properties.generic.MutableProperty
 import com.github.greennick.properties.subscriptions.Subscription
@@ -23,6 +22,3 @@ fun SeekBar.bindProgressBidirectionally(property: MutableProperty<Int>): Subscri
     subscription.onUnsubscribe { setOnSeekBarChangeListener(null) }
     return subscription
 }
-
-fun Activity.bindProgressBidirectionally(id: Int, property: MutableProperty<Int>): Subscription =
-    findViewById<SeekBar>(id).bindProgressBidirectionally(property)

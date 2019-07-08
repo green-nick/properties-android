@@ -1,10 +1,13 @@
+@file:Suppress("RemoveExplicitTypeArguments")
+
 package com.github.greennick.properties.androidx
 
-import android.app.Activity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
 import com.github.greennick.properties.generic.Property
+import com.github.greennick.properties.lifecycle.toEvent
 import com.github.greennick.properties.subscriptions.ListenableSubscription
 import com.google.android.material.textfield.TextInputLayout
 
@@ -21,101 +24,129 @@ fun TextInputLayout.bindHintEnabled(property: Property<Boolean>): ListenableSubs
     property.subscribe { isHintEnabled = it }
 
 /**
- * Activities section
- */
-
-fun Activity.bindErrorToInputLayout(
-    id: Int,
-    property: Property<out CharSequence?>
-): ListenableSubscription =
-    findViewById<TextInputLayout>(id).bindError(property)
-
-fun Activity.bindErrorEnabledToInputLayout(
-    id: Int,
-    property: Property<Boolean>
-): ListenableSubscription =
-    findViewById<TextInputLayout>(id).bindErrorEnabled(property)
-
-fun Activity.bindHintToInputLayout(
-    id: Int,
-    property: Property<out CharSequence?>
-): ListenableSubscription =
-    findViewById<TextInputLayout>(id).bindHint(property)
-
-fun Activity.bindHintEnabledToInputLayout(
-    id: Int,
-    property: Property<Boolean>
-): ListenableSubscription =
-    findViewById<TextInputLayout>(id).bindHintEnabled(property)
-
-/**
  * FragmentActivities section
  */
 
-fun FragmentActivity.bindErrorToInputLayout(
+fun FragmentActivity.bindError(
+    textInputLayout: TextInputLayout,
+    property: Property<out CharSequence?>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textInputLayout.bindError(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindErrorEnabled(
+    textInputLayout: TextInputLayout,
+    property: Property<Boolean>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textInputLayout.bindErrorEnabled(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindHint(
+    textInputLayout: TextInputLayout,
+    property: Property<out CharSequence?>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textInputLayout.bindHint(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindHintEnabled(
+    textInputLayout: TextInputLayout,
+    property: Property<Boolean>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textInputLayout.bindHintEnabled(property)
+        .toEvent(this, bindTo)
+
+fun FragmentActivity.bindInputLayoutError(
     id: Int,
     property: Property<out CharSequence?>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindErrorToInputLayout(id, property).toEvent(this, bindTo)
+    bindError(findViewById<TextInputLayout>(id), property, bindTo)
 
-fun FragmentActivity.bindErrorEnabledToInputLayout(
+fun FragmentActivity.bindInputLayoutErrorEnabled(
     id: Int,
     property: Property<Boolean>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindErrorEnabledToInputLayout(id, property).toEvent(this, bindTo)
+    bindErrorEnabled(findViewById<TextInputLayout>(id), property, bindTo)
 
-fun FragmentActivity.bindHintToInputLayout(
+fun FragmentActivity.bindInputLayoutHint(
     id: Int,
     property: Property<out CharSequence?>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHintToInputLayout(id, property).toEvent(this, bindTo)
+    bindHint(findViewById<TextInputLayout>(id), property, bindTo)
 
-fun FragmentActivity.bindHintEnabledToInputLayout(
+fun FragmentActivity.bindInputLayoutHintEnabled(
     id: Int,
     property: Property<Boolean>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHintEnabledToInputLayout(id, property).toEvent(this, bindTo)
+    bindHintEnabled(findViewById<TextInputLayout>(id), property, bindTo)
 
 /**
  * Fragments section
  */
 
-fun Fragment.bindErrorToInputLayout(
+fun Fragment.bindError(
+    textInputLayout: TextInputLayout,
+    property: Property<out CharSequence?>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textInputLayout.bindError(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindErrorEnabled(
+    textInputLayout: TextInputLayout,
+    property: Property<Boolean>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textInputLayout.bindErrorEnabled(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindHint(
+    textInputLayout: TextInputLayout,
+    property: Property<out CharSequence?>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textInputLayout.bindHint(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindHintEnabled(
+    textInputLayout: TextInputLayout,
+    property: Property<Boolean>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    textInputLayout.bindHintEnabled(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindInputLayoutError(
     id: Int,
     property: Property<out CharSequence?>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<TextInputLayout>(id)
-        .bindError(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindError(view!!.findViewById<TextInputLayout>(id), property, bindTo)
 
-fun Fragment.bindErrorEnabledToInputLayout(
+fun Fragment.bindInputLayoutErrorEnabled(
     id: Int,
     property: Property<Boolean>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<TextInputLayout>(id)
-        .bindErrorEnabled(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindErrorEnabled(view!!.findViewById<TextInputLayout>(id), property, bindTo)
 
-fun Fragment.bindHintToInputLayout(
+fun Fragment.bindInputLayoutHint(
     id: Int,
     property: Property<out CharSequence?>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<TextInputLayout>(id)
-        .bindHint(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindHint(view!!.findViewById<TextInputLayout>(id), property, bindTo)
 
-fun Fragment.bindHintEnabledToInputLayout(
+fun Fragment.bindInputLayoutHintEnabled(
     id: Int,
     property: Property<Boolean>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<TextInputLayout>(id)
-        .bindHintEnabled(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindHintEnabled(view!!.findViewById<TextInputLayout>(id), property, bindTo)
