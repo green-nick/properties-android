@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle.Event.*
 import com.github.greennick.properties.android.*
 import com.github.greennick.properties.generic.Property
 
@@ -12,39 +13,67 @@ import com.github.greennick.properties.generic.Property
  */
 
 fun FragmentActivity.bindVisibility(
-    id: Int,
+    view: View,
     property: Property<Boolean>,
-    bindTo: Lifecycle.Event,
+    bindTo: Lifecycle.Event = ON_DESTROY,
     invisibilityMode: Invisibility = Invisibility.GONE
 ): Unit =
-    bindVisibility(id, property, invisibilityMode).toEvent(this, bindTo)
+    view.bindVisibility(property, invisibilityMode).toEvent(this, bindTo)
+
+fun FragmentActivity.bindEnabled(
+    view: View,
+    property: Property<Boolean>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    view.bindEnabled(property).toEvent(this, bindTo)
+
+fun FragmentActivity.bindVisibility(
+    id: Int,
+    property: Property<Boolean>,
+    bindTo: Lifecycle.Event = ON_DESTROY,
+    invisibilityMode: Invisibility = Invisibility.GONE
+): Unit =
+    bindVisibility(findViewById<View>(id), property, bindTo, invisibilityMode)
 
 fun FragmentActivity.bindEnabled(
     id: Int,
     property: Property<Boolean>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindEnabled(id, property).toEvent(this, bindTo)
+    bindEnabled(findViewById<View>(id), property, bindTo)
 
 /**
  * Fragments section
  */
 
 fun Fragment.bindVisibility(
-    id: Int,
+    view: View,
     property: Property<Boolean>,
-    bindTo: Lifecycle.Event,
+    bindTo: Lifecycle.Event = ON_DESTROY,
     invisibilityMode: Invisibility = Invisibility.GONE
 ): Unit =
-    view!!.findViewById<View>(id)
-        .bindVisibility(property, invisibilityMode)
+    view.bindVisibility(property, invisibilityMode)
         .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindEnabled(
+    view: View,
+    property: Property<Boolean>,
+    bindTo: Lifecycle.Event = ON_DESTROY
+): Unit =
+    view.bindEnabled(property)
+        .toEvent(this.viewLifecycleOwner, bindTo)
+
+fun Fragment.bindVisibility(
+    id: Int,
+    property: Property<Boolean>,
+    bindTo: Lifecycle.Event = ON_DESTROY,
+    invisibilityMode: Invisibility = Invisibility.GONE
+): Unit =
+    bindVisibility(view!!.findViewById<View>(id), property, bindTo, invisibilityMode)
 
 fun Fragment.bindEnabled(
     id: Int,
     property: Property<Boolean>,
-    bindTo: Lifecycle.Event
+    bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    view!!.findViewById<View>(id)
-        .bindEnabled(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
+    bindEnabled(view!!.findViewById<View>(id), property, bindTo)
