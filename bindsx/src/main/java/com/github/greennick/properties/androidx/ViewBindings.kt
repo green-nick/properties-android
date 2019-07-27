@@ -36,14 +36,14 @@ fun FragmentActivity.bindVisibility(
     bindTo: Lifecycle.Event = ON_DESTROY,
     invisibilityMode: Invisibility = Invisibility.GONE
 ): Unit =
-    bindVisibility(findViewById<View>(id), property, bindTo, invisibilityMode)
+    bindVisibility(find<View>(id), property, bindTo, invisibilityMode)
 
 fun FragmentActivity.bindEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindEnabled(findViewById<View>(id), property, bindTo)
+    bindEnabled(find<View>(id), property, bindTo)
 
 /**
  * Fragments section
@@ -72,11 +72,11 @@ fun Fragment.bindVisibility(
     bindTo: Lifecycle.Event = ON_DESTROY,
     invisibilityMode: Invisibility = Invisibility.GONE
 ): Unit =
-    bindVisibility(view!!.findViewById<View>(id), property, bindTo, invisibilityMode)
+    bindVisibility(find<View>(id), property, bindTo, invisibilityMode)
 
 fun Fragment.bindEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindEnabled(view!!.findViewById<View>(id), property, bindTo)
+    bindEnabled(find<View>(id), property, bindTo)
