@@ -70,11 +70,11 @@ fun Fragment.bindChecked(
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindChecked(view!!.findViewById<CompoundButton>(id), property, bindTo)
+    bindChecked(view<CompoundButton>(id), property, bindTo)
 
 fun Fragment.bindCheckedBidirectionally(
     id: Int,
     property: MutableProperty<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindCheckedBidirectionally(view!!.findViewById<CompoundButton>(id), property, bindTo)
+    bindCheckedBidirectionally(view<CompoundButton>(id), property, bindTo)

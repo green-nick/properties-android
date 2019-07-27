@@ -72,11 +72,11 @@ fun Fragment.bindVisibility(
     bindTo: Lifecycle.Event = ON_DESTROY,
     invisibilityMode: Invisibility = Invisibility.GONE
 ): Unit =
-    bindVisibility(view!!.findViewById<View>(id), property, bindTo, invisibilityMode)
+    bindVisibility(view<View>(id), property, bindTo, invisibilityMode)
 
 fun Fragment.bindEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindEnabled(view!!.findViewById<View>(id), property, bindTo)
+    bindEnabled(view<View>(id), property, bindTo)

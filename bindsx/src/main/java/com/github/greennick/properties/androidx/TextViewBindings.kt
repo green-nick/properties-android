@@ -138,32 +138,32 @@ fun Fragment.bindText(
     property: Property<out Any?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindText(view!!.findViewById<TextView>(id), property, bindTo)
+    bindText(view<TextView>(id), property, bindTo)
 
 fun Fragment.bindTextId(
     id: Int,
     property: Property<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindTextId(view!!.findViewById<TextView>(id), property, bindTo)
+    bindTextId(view<TextView>(id), property, bindTo)
 
 fun Fragment.bindHint(
     id: Int,
     property: Property<out CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHint(view!!.findViewById<TextView>(id), property, bindTo)
+    bindHint(view<TextView>(id), property, bindTo)
 
 fun Fragment.bindHintId(
     id: Int,
     property: Property<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHintId(view!!.findViewById<TextView>(id), property, bindTo)
+    bindHintId(view<TextView>(id), property, bindTo)
 
 fun Fragment.bindTextBidirectionally(
     id: Int,
     property: MutableProperty<String>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindTextBidirectionally(view!!.findViewById<TextView>(id), property, bindTo)
+    bindTextBidirectionally(view<TextView>(id), property, bindTo)

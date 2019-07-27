@@ -45,4 +45,4 @@ fun Fragment.bindProgress(
     property: Property<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindProgress(view!!.findViewById<ProgressBar>(id), property, bindTo)
+    bindProgress(view<ProgressBar>(id), property, bindTo)

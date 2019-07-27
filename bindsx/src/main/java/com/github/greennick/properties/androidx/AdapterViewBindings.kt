@@ -45,4 +45,4 @@ fun Fragment.bindSelectionBidirectionally(
     property: MutableProperty<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindSelectionBidirectionally(view!!.findViewById<AdapterView<*>>(id), property, bindTo)
+    bindSelectionBidirectionally(view<AdapterView<*>>(id), property, bindTo)

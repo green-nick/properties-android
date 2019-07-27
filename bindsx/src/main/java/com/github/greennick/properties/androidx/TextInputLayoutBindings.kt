@@ -128,25 +128,25 @@ fun Fragment.bindInputLayoutError(
     property: Property<out CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindError(view!!.findViewById<TextInputLayout>(id), property, bindTo)
+    bindError(view<TextInputLayout>(id), property, bindTo)
 
 fun Fragment.bindInputLayoutErrorEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindErrorEnabled(view!!.findViewById<TextInputLayout>(id), property, bindTo)
+    bindErrorEnabled(view<TextInputLayout>(id), property, bindTo)
 
 fun Fragment.bindInputLayoutHint(
     id: Int,
     property: Property<out CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHint(view!!.findViewById<TextInputLayout>(id), property, bindTo)
+    bindHint(view<TextInputLayout>(id), property, bindTo)
 
 fun Fragment.bindInputLayoutHintEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHintEnabled(view!!.findViewById<TextInputLayout>(id), property, bindTo)
+    bindHintEnabled(view<TextInputLayout>(id), property, bindTo)
