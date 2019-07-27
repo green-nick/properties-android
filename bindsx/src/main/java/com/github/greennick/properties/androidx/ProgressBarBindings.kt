@@ -26,7 +26,7 @@ fun FragmentActivity.bindProgress(
     property: Property<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindProgress(findViewById<ProgressBar>(id), property, bindTo)
+    bindProgress(view<ProgressBar>(id), property, bindTo)
 
 /**
  * Fragments section

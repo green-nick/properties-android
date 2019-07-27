@@ -25,7 +25,7 @@ fun FragmentActivity.bindProgressBidirectionally(
     property: MutableProperty<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindProgressBidirectionally(findViewById<SeekBar>(id), property, bindTo)
+    bindProgressBidirectionally(view<SeekBar>(id), property, bindTo)
 
 /**
  * Fragments section

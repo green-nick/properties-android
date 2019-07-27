@@ -26,7 +26,7 @@ fun FragmentActivity.bindError(
     property: Property<out CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindError(findViewById<EditText>(id), property, bindTo)
+    bindError(view<EditText>(id), property, bindTo)
 
 /**
  * Fragments section
