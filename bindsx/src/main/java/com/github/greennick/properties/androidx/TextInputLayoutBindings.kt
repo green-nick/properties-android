@@ -64,28 +64,28 @@ fun FragmentActivity.bindInputLayoutError(
     property: Property<out CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindError(view<TextInputLayout>(id), property, bindTo)
+    bindError(find<TextInputLayout>(id), property, bindTo)
 
 fun FragmentActivity.bindInputLayoutErrorEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindErrorEnabled(view<TextInputLayout>(id), property, bindTo)
+    bindErrorEnabled(find<TextInputLayout>(id), property, bindTo)
 
 fun FragmentActivity.bindInputLayoutHint(
     id: Int,
     property: Property<out CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHint(view<TextInputLayout>(id), property, bindTo)
+    bindHint(find<TextInputLayout>(id), property, bindTo)
 
 fun FragmentActivity.bindInputLayoutHintEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHintEnabled(view<TextInputLayout>(id), property, bindTo)
+    bindHintEnabled(find<TextInputLayout>(id), property, bindTo)
 
 /**
  * Fragments section
@@ -128,25 +128,25 @@ fun Fragment.bindInputLayoutError(
     property: Property<out CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindError(view<TextInputLayout>(id), property, bindTo)
+    bindError(find<TextInputLayout>(id), property, bindTo)
 
 fun Fragment.bindInputLayoutErrorEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindErrorEnabled(view<TextInputLayout>(id), property, bindTo)
+    bindErrorEnabled(find<TextInputLayout>(id), property, bindTo)
 
 fun Fragment.bindInputLayoutHint(
     id: Int,
     property: Property<out CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHint(view<TextInputLayout>(id), property, bindTo)
+    bindHint(find<TextInputLayout>(id), property, bindTo)
 
 fun Fragment.bindInputLayoutHintEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindHintEnabled(view<TextInputLayout>(id), property, bindTo)
+    bindHintEnabled(find<TextInputLayout>(id), property, bindTo)
