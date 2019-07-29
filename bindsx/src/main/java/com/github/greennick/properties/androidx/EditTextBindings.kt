@@ -26,7 +26,7 @@ fun FragmentActivity.bindError(
     property: Property<out CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindError(findViewById<EditText>(id), property, bindTo)
+    bindError(find<EditText>(id), property, bindTo)
 
 /**
  * Fragments section
@@ -45,4 +45,4 @@ fun Fragment.bindError(
     property: Property<out CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
-    bindError(view!!.findViewById<EditText>(id), property, bindTo)
+    bindError(find<EditText>(id), property, bindTo)
