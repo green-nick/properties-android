@@ -1,9 +1,9 @@
-package com.github.green_nick.savedstate
+package com.github.greennick.properties.savedstate
 
 import android.content.Context
 import android.os.Bundle
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.runner.AndroidJUnit4
 import com.github.greennick.properties.emptyProperty
 import com.github.greennick.properties.propertyOf
 
@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class SavedStateHolderTests {
 
-    private val context: Context get() = InstrumentationRegistry.getTargetContext()
+    private val context: Context get() = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Test
     fun bundle_contains_value_with_given_tag() {

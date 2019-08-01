@@ -1,4 +1,4 @@
-package com.github.green_nick.savedstate
+package com.github.greennick.properties.savedstate
 
 fun checkIf(statement: Boolean, message: String = "") {
     if (!statement) {

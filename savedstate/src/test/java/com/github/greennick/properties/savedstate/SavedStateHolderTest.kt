@@ -1,4 +1,4 @@
-package com.github.green_nick.savedstate
+package com.github.greennick.properties.savedstate
 
 import com.github.greennick.properties.propertyOf
 import org.junit.Test
