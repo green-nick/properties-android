@@ -4,13 +4,13 @@ import com.github.greennick.properties.propertyOf
 import org.junit.Test
 
 class SavedStateHolderTest {
-    private val prop = propertyOf(1)
+    private val awesomeCoolProperty = propertyOf(1)
 
     @Test
     fun test() {
-        val savedState = SavedStateHolderImpl(Strict.NONE)
+        val savedState = SavedStateHolder(Strict.NONE)
 
-        savedState.connect(::prop)
+        savedState.put(::awesomeCoolProperty)
 
         println(savedState)
     }

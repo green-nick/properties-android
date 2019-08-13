@@ -20,8 +20,8 @@ class SavedStateHolderTests {
         val initValue = 101
         val tag = "prop"
         val prop = propertyOf(initValue)
-        val savedState = SavedStateHolderImpl(Strict.HARD)
-        savedState.bind(tag, prop)
+        val savedState = SavedStateHolder(Strict.ERROR)
+        savedState.put(tag, prop)
 
         val bundle = Bundle()
         savedState.onSaveInstanceState(context, bundle)
@@ -35,8 +35,8 @@ class SavedStateHolderTests {
         val initValue = 101
         val tag = "prop"
         val prop = propertyOf(initValue)
-        val savedState = SavedStateHolderImpl(Strict.HARD)
-        savedState.bind(tag, prop)
+        val savedState = SavedStateHolder(Strict.ERROR)
+        savedState.put(tag, prop)
 
         val bundle = Bundle()
         savedState.onSaveInstanceState(context, bundle)
@@ -53,8 +53,8 @@ class SavedStateHolderTests {
         val initValue = "hello"
         val tag = "prop"
         val prop = emptyProperty(initValue)
-        val savedState = SavedStateHolderImpl(Strict.HARD)
-        savedState.bind(tag, prop)
+        val savedState = SavedStateHolder(Strict.ERROR)
+        savedState.put(tag, prop)
 
         val bundle = Bundle()
         savedState.onSaveInstanceState(context, bundle)
@@ -66,8 +66,8 @@ class SavedStateHolderTests {
     fun nullable_property_with_null_value() {
         val tag = "prop"
         val prop = emptyProperty<String>()
-        val savedState = SavedStateHolderImpl(Strict.HARD)
-        savedState.bind(tag, prop)
+        val savedState = SavedStateHolder(Strict.ERROR)
+        savedState.put(tag, prop)
 
         val bundle = Bundle()
         savedState.onSaveInstanceState(context, bundle)
@@ -80,8 +80,8 @@ class SavedStateHolderTests {
     fun nullable_property_restore_value() {
         val tag = "prop"
         val prop = emptyProperty<String>()
-        val savedState = SavedStateHolderImpl(Strict.HARD)
-        savedState.bind(tag, prop)
+        val savedState = SavedStateHolder(Strict.ERROR)
+        savedState.put(tag, prop)
 
         val bundle = Bundle()
         savedState.onSaveInstanceState(context, bundle)
@@ -102,9 +102,9 @@ class SavedStateHolderTests {
         val stringTag = "stringProp"
         val stringProp = propertyOf(stringValue)
 
-        val savedState = SavedStateHolderImpl(Strict.HARD)
-        savedState.bind(intTag, intProp)
-        savedState.bind(stringTag, stringProp)
+        val savedState = SavedStateHolder(Strict.ERROR)
+        savedState.put(intTag, intProp)
+        savedState.put(stringTag, stringProp)
 
         val bundle = Bundle()
         savedState.onSaveInstanceState(context, bundle)
@@ -118,8 +118,8 @@ class SavedStateHolderTests {
         val initValue = 101
         val tag = "prop"
         val prop = propertyOf(initValue)
-        val savedState = SavedStateHolderImpl(Strict.HARD)
-        savedState.bind(tag, prop)
+        val savedState = SavedStateHolder(Strict.ERROR)
+        savedState.put(tag, prop)
 
         val bundle = Bundle()
         savedState.onSaveInstanceState(context, bundle)
