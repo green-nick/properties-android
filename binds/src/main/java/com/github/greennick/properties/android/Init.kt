@@ -3,6 +3,7 @@ package com.github.greennick.properties.android
 import android.os.Handler
 import android.os.Looper
 import com.github.greennick.properties.debounce.*
+import com.github.greennick.properties.debouncePropertyOf
 import com.github.greennick.properties.generic.MutableProperty
 
 fun <T> handlerDebouncePropertyOf(
