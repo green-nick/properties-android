@@ -11,13 +11,13 @@ import com.github.greennick.properties.lifecycle.toEvent
 import com.github.greennick.properties.subscriptions.ListenableSubscription
 import com.google.android.material.textfield.TextInputLayout
 
-fun TextInputLayout.bindError(property: Property<out CharSequence?>): ListenableSubscription =
+fun TextInputLayout.bindError(property: Property<CharSequence?>): ListenableSubscription =
     property.subscribe { error = it }
 
 fun TextInputLayout.bindErrorEnabled(property: Property<Boolean>): ListenableSubscription =
     property.subscribe { isErrorEnabled = it }
 
-fun TextInputLayout.bindHint(property: Property<out CharSequence?>): ListenableSubscription =
+fun TextInputLayout.bindHint(property: Property<CharSequence?>): ListenableSubscription =
     property.subscribe { hint = it }
 
 fun TextInputLayout.bindHintEnabled(property: Property<Boolean>): ListenableSubscription =
@@ -29,7 +29,7 @@ fun TextInputLayout.bindHintEnabled(property: Property<Boolean>): ListenableSubs
 
 fun FragmentActivity.bindError(
     textInputLayout: TextInputLayout,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     textInputLayout.bindError(property)
@@ -45,7 +45,7 @@ fun FragmentActivity.bindErrorEnabled(
 
 fun FragmentActivity.bindHint(
     textInputLayout: TextInputLayout,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     textInputLayout.bindHint(property)
@@ -61,7 +61,7 @@ fun FragmentActivity.bindHintEnabled(
 
 fun FragmentActivity.bindInputLayoutError(
     id: Int,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindError(find<TextInputLayout>(id), property, bindTo)
@@ -75,7 +75,7 @@ fun FragmentActivity.bindInputLayoutErrorEnabled(
 
 fun FragmentActivity.bindInputLayoutHint(
     id: Int,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindHint(find<TextInputLayout>(id), property, bindTo)
@@ -93,7 +93,7 @@ fun FragmentActivity.bindInputLayoutHintEnabled(
 
 fun Fragment.bindError(
     textInputLayout: TextInputLayout,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     textInputLayout.bindError(property)
@@ -109,7 +109,7 @@ fun Fragment.bindErrorEnabled(
 
 fun Fragment.bindHint(
     textInputLayout: TextInputLayout,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     textInputLayout.bindHint(property)
@@ -125,7 +125,7 @@ fun Fragment.bindHintEnabled(
 
 fun Fragment.bindInputLayoutError(
     id: Int,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindError(find<TextInputLayout>(id), property, bindTo)
@@ -139,7 +139,7 @@ fun Fragment.bindInputLayoutErrorEnabled(
 
 fun Fragment.bindInputLayoutHint(
     id: Int,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindHint(find<TextInputLayout>(id), property, bindTo)

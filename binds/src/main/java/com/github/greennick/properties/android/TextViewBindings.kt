@@ -8,13 +8,13 @@ import com.github.greennick.properties.generic.Property
 import com.github.greennick.properties.subscriptions.ListenableSubscription
 import com.github.greennick.properties.subscriptions.Subscription
 
-fun TextView.bindText(property: Property<out Any?>): ListenableSubscription =
+fun TextView.bindText(property: Property<Any?>): ListenableSubscription =
     property.subscribe { text = it?.toString().orEmpty() }
 
 fun TextView.bindTextId(property: Property<Int>): ListenableSubscription =
     property.subscribe { setText(it) }
 
-fun TextView.bindHint(property: Property<out CharSequence?>): ListenableSubscription =
+fun TextView.bindHint(property: Property<CharSequence?>): ListenableSubscription =
     property.subscribe { hint = it }
 
 fun TextView.bindHintId(property: Property<Int>): ListenableSubscription =

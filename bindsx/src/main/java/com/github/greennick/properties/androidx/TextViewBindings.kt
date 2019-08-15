@@ -16,7 +16,7 @@ import com.github.greennick.properties.lifecycle.toEvent
 
 fun FragmentActivity.bindText(
     textView: TextView,
-    property: Property<out Any?>,
+    property: Property<Any?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     textView.bindText(property)
@@ -32,7 +32,7 @@ fun FragmentActivity.bindTextId(
 
 fun FragmentActivity.bindHint(
     textView: TextView,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     textView.bindHint(property)
@@ -56,7 +56,7 @@ fun FragmentActivity.bindTextBidirectionally(
 
 fun FragmentActivity.bindText(
     id: Int,
-    property: Property<out Any?>,
+    property: Property<Any?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindText(find<TextView>(id), property, bindTo)
@@ -70,7 +70,7 @@ fun FragmentActivity.bindTextId(
 
 fun FragmentActivity.bindHint(
     id: Int,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindHint(find<TextView>(id), property, bindTo)
@@ -95,7 +95,7 @@ fun FragmentActivity.bindTextBidirectionally(
 
 fun Fragment.bindText(
     textView: TextView,
-    property: Property<out Any?>,
+    property: Property<Any?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     textView.bindText(property)
@@ -111,7 +111,7 @@ fun Fragment.bindTextId(
 
 fun Fragment.bindHint(
     textView: TextView,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     textView.bindHint(property)
@@ -135,7 +135,7 @@ fun Fragment.bindTextBidirectionally(
 
 fun Fragment.bindText(
     id: Int,
-    property: Property<out Any?>,
+    property: Property<Any?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindText(find<TextView>(id), property, bindTo)
@@ -149,7 +149,7 @@ fun Fragment.bindTextId(
 
 fun Fragment.bindHint(
     id: Int,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindHint(find<TextView>(id), property, bindTo)

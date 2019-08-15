@@ -15,7 +15,7 @@ import com.github.greennick.properties.lifecycle.toEvent
 
 fun FragmentActivity.bindError(
     editText: EditText,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     editText.bindError(property)
@@ -23,7 +23,7 @@ fun FragmentActivity.bindError(
 
 fun FragmentActivity.bindError(
     id: Int,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindError(find<EditText>(id), property, bindTo)
@@ -34,7 +34,7 @@ fun FragmentActivity.bindError(
 
 fun Fragment.bindError(
     editText: EditText,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     editText.bindError(property)
@@ -42,7 +42,7 @@ fun Fragment.bindError(
 
 fun Fragment.bindError(
     id: Int,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindError(find<EditText>(id), property, bindTo)
