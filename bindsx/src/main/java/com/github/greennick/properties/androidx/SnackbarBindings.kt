@@ -9,13 +9,27 @@ import com.github.greennick.properties.lifecycle.toEvent
 import com.github.greennick.properties.subscriptions.ListenableSubscription
 import com.google.android.material.snackbar.Snackbar
 
+/**
+ * Binds [Snackbar] to Property<Boolean>.
+ * Uses [Snackbar.show] and [Snackbar.dismiss]
+ *
+ * @param property - visible/invisible holder
+ */
 fun Snackbar.bindVisibility(property: Property<Boolean>): ListenableSubscription =
     property.subscribe { if (it) show() else dismiss() }
 
 /**
- * FragmentActivities section
+ * FragmentActivity section
  */
 
+/**
+ * Binds [Snackbar] to Property<Boolean>.
+ * @see bindVisibility
+ *
+ * @param property - visible/invisible holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ */
 fun FragmentActivity.bindVisibility(
     snackbar: Snackbar,
     property: Property<Boolean>,
@@ -25,9 +39,17 @@ fun FragmentActivity.bindVisibility(
         .toEvent(this, bindTo)
 
 /**
- * Fragments section
+ * Fragment section
  */
 
+/**
+ * Binds [Snackbar] to Property<Boolean>.
+ * @see bindVisibility
+ *
+ * @param property - visible/invisible holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ */
 fun Fragment.bindVisibility(
     snackbar: Snackbar,
     property: Property<Boolean>,

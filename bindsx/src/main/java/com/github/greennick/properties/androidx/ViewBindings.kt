@@ -10,9 +10,19 @@ import com.github.greennick.properties.generic.Property
 import com.github.greennick.properties.lifecycle.toEvent
 
 /**
- * FragmentActivities section
+ * FragmentActivity section
  */
 
+/**
+ * Binds [View] to Property<Boolean>.
+ * @see bindVisibility
+ *
+ * @param property - visible/invisible holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ * @param invisibilityMode - set mode for invisibility from [Invisibility],
+ * [Invisibility.GONE] is default
+ */
 fun FragmentActivity.bindVisibility(
     view: View,
     property: Property<Boolean>,
@@ -22,6 +32,14 @@ fun FragmentActivity.bindVisibility(
     view.bindVisibility(property, invisibilityMode)
         .toEvent(this, bindTo)
 
+/**
+ * Binds [View] to Property<Boolean>.
+ * @see bindEnabled
+ *
+ * @param property - enable/disable holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ */
 fun FragmentActivity.bindEnabled(
     view: View,
     property: Property<Boolean>,
@@ -30,6 +48,19 @@ fun FragmentActivity.bindEnabled(
     view.bindEnabled(property)
         .toEvent(this, bindTo)
 
+/**
+ * Looking for [View] by given id and binds it to Property<Boolean>.
+ * @see bindVisibility
+ *
+ * @param id - [View]'s id
+ * @param property - visible/invisible holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ * @param invisibilityMode - set mode for invisibility from [Invisibility],
+ * [Invisibility.GONE] is default
+ *
+ * @throws IllegalArgumentException if View with given id isn't found
+ */
 fun FragmentActivity.bindVisibility(
     id: Int,
     property: Property<Boolean>,
@@ -38,6 +69,17 @@ fun FragmentActivity.bindVisibility(
 ): Unit =
     bindVisibility(find<View>(id), property, bindTo, invisibilityMode)
 
+/**
+ * Looking for [View] by given id and binds it to Property<Boolean>.
+ * @see bindEnabled
+ *
+ * @param id - [View]'s id
+ * @param property - enable/disable holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ *
+ * @throws IllegalArgumentException if View with given id isn't found
+ */
 fun FragmentActivity.bindEnabled(
     id: Int,
     property: Property<Boolean>,
@@ -46,9 +88,19 @@ fun FragmentActivity.bindEnabled(
     bindEnabled(find<View>(id), property, bindTo)
 
 /**
- * Fragments section
+ * Fragment section
  */
 
+/**
+ * Binds [View] to Property<Boolean>.
+ * @see bindVisibility
+ *
+ * @param property - visible/invisible holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ * @param invisibilityMode - set mode for invisibility from [Invisibility],
+ * [Invisibility.GONE] is default
+ */
 fun Fragment.bindVisibility(
     view: View,
     property: Property<Boolean>,
@@ -58,6 +110,14 @@ fun Fragment.bindVisibility(
     view.bindVisibility(property, invisibilityMode)
         .toEvent(this.viewLifecycleOwner, bindTo)
 
+/**
+ * Binds [View] to Property<Boolean>.
+ * @see bindEnabled
+ *
+ * @param property - enable/disable holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ */
 fun Fragment.bindEnabled(
     view: View,
     property: Property<Boolean>,
@@ -66,6 +126,19 @@ fun Fragment.bindEnabled(
     view.bindEnabled(property)
         .toEvent(this.viewLifecycleOwner, bindTo)
 
+/**
+ * Looking for [View] by given id and binds it to Property<Boolean>.
+ * @see bindVisibility
+ *
+ * @param id - [View]'s id
+ * @param property - visible/invisible holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ * @param invisibilityMode - set mode for invisibility from [Invisibility],
+ * [Invisibility.GONE] is default
+ *
+ * @throws IllegalArgumentException if View with given id isn't found
+ */
 fun Fragment.bindVisibility(
     id: Int,
     property: Property<Boolean>,
@@ -74,6 +147,17 @@ fun Fragment.bindVisibility(
 ): Unit =
     bindVisibility(find<View>(id), property, bindTo, invisibilityMode)
 
+/**
+ * Looking for [View] by given id and binds it to Property<Boolean>.
+ * @see bindEnabled
+ *
+ * @param id - [View]'s id
+ * @param property - enable/disable holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ *
+ * @throws IllegalArgumentException if View with given id isn't found
+ */
 fun Fragment.bindEnabled(
     id: Int,
     property: Property<Boolean>,

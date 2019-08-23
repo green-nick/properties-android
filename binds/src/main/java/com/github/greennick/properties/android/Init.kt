@@ -6,6 +6,13 @@ import com.github.greennick.properties.debounce.*
 import com.github.greennick.properties.debouncePropertyOf
 import com.github.greennick.properties.generic.MutableProperty
 
+/**
+ * Extension for [debouncePropertyOf] which allows to use
+ * [Handler] for scheduling and process updates
+ *
+ * @param delay - threshold which has to be passed, before new value will be set.
+ * @param handler - [Handler] used to process updates, default based on [Looper.getMainLooper]
+ */
 fun <T> handlerDebouncePropertyOf(
     value: T,
     delay: Long,

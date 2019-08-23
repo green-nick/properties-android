@@ -9,25 +9,25 @@ import com.github.greennick.properties.generic.Property
 import com.github.greennick.properties.lifecycle.toEvent
 
 /**
- * FragmentActivities section
+ * FragmentActivity section
  */
 
 fun <T> FragmentActivity.bind(
     property: Property<List<T>>,
-    event: Lifecycle.Event = Lifecycle.Event.ON_DESTROY,
-    adapter: BoundAdapter<T>
+    adapter: BoundAdapter<T>,
+    event: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
 ) {
     adapter.bind(property).toEvent(this, event)
 }
 
 /**
- * Fragments section
+ * Fragment section
  */
 
 fun <T> Fragment.bind(
     property: Property<List<T>>,
-    event: Lifecycle.Event = Lifecycle.Event.ON_DESTROY,
-    adapter: BoundAdapter<T>
+    adapter: BoundAdapter<T>,
+    event: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
 ) {
     adapter.bind(property).toEvent(this.viewLifecycleOwner, event)
 }
