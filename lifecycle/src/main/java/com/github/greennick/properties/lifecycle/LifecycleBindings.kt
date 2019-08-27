@@ -6,7 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.github.greennick.properties.subscriptions.Subscription
 
 /**
- * Binds Subscription to set Lifecycle event.
+ * Binds unsubscribe to set Lifecycle event.
  * Will automatically unsubscribe it when this event happens
  */
 fun Subscription.toEvent(owner: LifecycleOwner, boundEvent: Lifecycle.Event) {
@@ -20,16 +20,16 @@ fun Subscription.toEvent(owner: LifecycleOwner, boundEvent: Lifecycle.Event) {
 }
 
 /**
- * Bind unsubscribing to onPause lifecycle event of Lifecycle owner
+ * Bind unsubscribe to onPause lifecycle event of Lifecycle owner
  */
 fun Subscription.toPause(owner: LifecycleOwner): Unit = toEvent(owner, Lifecycle.Event.ON_PAUSE)
 
 /**
- * Bind unsubscribing to onPause lifecycle event of Lifecycle owner
+ * Bind unsubscribe to onPause lifecycle event of Lifecycle owner
  */
 fun Subscription.toStop(owner: LifecycleOwner): Unit = toEvent(owner, Lifecycle.Event.ON_STOP)
 
 /**
- * Bind unsubscribing to onDestroy lifecycle event of Lifecycle owner
+ * Bind unsubscribe to onDestroy lifecycle event of Lifecycle owner
  */
 fun Subscription.toDestroy(owner: LifecycleOwner): Unit = toEvent(owner, Lifecycle.Event.ON_DESTROY)

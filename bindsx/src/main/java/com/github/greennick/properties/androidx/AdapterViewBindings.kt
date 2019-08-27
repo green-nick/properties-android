@@ -10,9 +10,17 @@ import com.github.greennick.properties.generic.MutableProperty
 import com.github.greennick.properties.lifecycle.toEvent
 
 /**
- * FragmentActivities section
+ * FragmentActivity section
  */
 
+/**
+ * Binds [AdapterView] to MutableProperty<Int>.
+ * @see bindSelectionBidirectionally
+ *
+ * @param property - selection holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ */
 fun FragmentActivity.bindSelectionBidirectionally(
     adapterView: AdapterView<*>,
     property: MutableProperty<Int>,
@@ -21,6 +29,18 @@ fun FragmentActivity.bindSelectionBidirectionally(
     adapterView.bindSelectionBidirectionally(property)
         .toEvent(this, bindTo)
 
+/**
+ * Looking for [AdapterView] by given id and binds it to MutableProperty<Int>.
+ * @see bindSelectionBidirectionally
+ *
+ * @param id - [AdapterView]'s id
+ * @param property - selection holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ *
+ * @throws IllegalArgumentException if AdapterView with given id isn't found
+ * @throws ClassCastException if found View isn't AdapterView
+ */
 fun FragmentActivity.bindSelectionBidirectionally(
     id: Int,
     property: MutableProperty<Int>,
@@ -29,9 +49,17 @@ fun FragmentActivity.bindSelectionBidirectionally(
     bindSelectionBidirectionally(find<AdapterView<*>>(id), property, bindTo)
 
 /**
- * Fragments section
+ * Fragment section
  */
 
+/**
+ * Binds [AdapterView] to MutableProperty<Int>.
+ * @see bindSelectionBidirectionally
+ *
+ * @param property - selection holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ */
 fun Fragment.bindSelectionBidirectionally(
     adapterView: AdapterView<*>,
     property: MutableProperty<Int>,
@@ -40,6 +68,18 @@ fun Fragment.bindSelectionBidirectionally(
     adapterView.bindSelectionBidirectionally(property)
         .toEvent(this.viewLifecycleOwner, bindTo)
 
+/**
+ * Looking for [AdapterView] by given id and binds it to MutableProperty<Int>.
+ * @see bindSelectionBidirectionally
+ *
+ * @param id - [AdapterView]'s id
+ * @param property - selection holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ *
+ * @throws IllegalArgumentException if AdapterView with given id isn't found
+ * @throws ClassCastException if found View isn't AdapterView
+ */
 fun Fragment.bindSelectionBidirectionally(
     id: Int,
     property: MutableProperty<Int>,

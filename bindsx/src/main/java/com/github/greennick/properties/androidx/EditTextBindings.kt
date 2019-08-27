@@ -10,39 +10,79 @@ import com.github.greennick.properties.generic.Property
 import com.github.greennick.properties.lifecycle.toEvent
 
 /**
- * FragmentActivities section
+ * FragmentActivity section
  */
 
+/**
+ * Binds [EditText] to Property<CharSequence?>.
+ * @see bindError
+ *
+ * @param property - error text holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ */
 fun FragmentActivity.bindError(
     editText: EditText,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     editText.bindError(property)
         .toEvent(this, bindTo)
 
+/**
+ * Looking for [EditText] by given id and binds it to Property<CharSequence?>.
+ * @see bindError
+ *
+ * @param id - [EditText]'s id
+ * @param property - error text holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ *
+ * @throws IllegalArgumentException if EditText with given id isn't found
+ * @throws ClassCastException if found View isn't EditText
+ */
 fun FragmentActivity.bindError(
     id: Int,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindError(find<EditText>(id), property, bindTo)
 
 /**
- * Fragments section
+ * Fragment section
  */
 
+/**
+ * Binds [EditText] to Property<CharSequence?>.
+ * @see bindError
+ *
+ * @param property - error text holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ */
 fun Fragment.bindError(
     editText: EditText,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     editText.bindError(property)
         .toEvent(this.viewLifecycleOwner, bindTo)
 
+/**
+ * Looking for [EditText] by given id and binds it to Property<CharSequence?>.
+ * @see bindError
+ *
+ * @param id - [EditText]'s id
+ * @param property - error text holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ *
+ * @throws IllegalArgumentException if EditText with given id isn't found
+ * @throws ClassCastException if found View isn't EditText
+ */
 fun Fragment.bindError(
     id: Int,
-    property: Property<out CharSequence?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindError(find<EditText>(id), property, bindTo)

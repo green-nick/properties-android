@@ -10,9 +10,17 @@ import com.github.greennick.properties.generic.MutableProperty
 import com.github.greennick.properties.lifecycle.toEvent
 
 /**
- * FragmentActivities section
+ * FragmentActivity section
  */
 
+/**
+ * Binds [SeekBar] to MutableProperty<Int>.
+ * @see bindProgressBidirectionally
+ *
+ * @param property - progress value holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ */
 fun FragmentActivity.bindProgressBidirectionally(
     seekBar: SeekBar,
     property: MutableProperty<Int>,
@@ -20,6 +28,18 @@ fun FragmentActivity.bindProgressBidirectionally(
 ): Unit =
     seekBar.bindProgressBidirectionally(property).toEvent(this, bindTo)
 
+/**
+ * Looking for [SeekBar] by given id and binds it to MutableProperty<Int>.
+ * @see bindProgressBidirectionally
+ *
+ * @param id - [SeekBar]'s id
+ * @param property - progress value holder
+ * @param bindTo - lifecycle event for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ *
+ * @throws IllegalArgumentException if SeekBar with given id isn't found
+ * @throws ClassCastException if found View isn't SeekBar
+ */
 fun FragmentActivity.bindProgressBidirectionally(
     id: Int,
     property: MutableProperty<Int>,
@@ -28,9 +48,17 @@ fun FragmentActivity.bindProgressBidirectionally(
     bindProgressBidirectionally(find<SeekBar>(id), property, bindTo)
 
 /**
- * Fragments section
+ * Fragment section
  */
 
+/**
+ * Binds [SeekBar] to MutableProperty<Int>.
+ * @see bindProgressBidirectionally
+ *
+ * @param property - progress value holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ */
 fun Fragment.bindProgressBidirectionally(
     seekBar: SeekBar,
     property: MutableProperty<Int>,
@@ -39,6 +67,18 @@ fun Fragment.bindProgressBidirectionally(
     seekBar.bindProgressBidirectionally(property)
         .toEvent(this.viewLifecycleOwner, bindTo)
 
+/**
+ * Looking for [SeekBar] by given id and binds it to MutableProperty<Int>.
+ * @see bindProgressBidirectionally
+ *
+ * @param id - [SeekBar]'s id
+ * @param property - progress value holder
+ * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
+ * [Lifecycle.Event.ON_DESTROY] is default
+ *
+ * @throws IllegalArgumentException if SeekBar with given id isn't found
+ * @throws ClassCastException if found View isn't SeekBar
+ */
 fun Fragment.bindProgressBidirectionally(
     id: Int,
     property: MutableProperty<Int>,
