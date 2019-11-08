@@ -1,5 +1,6 @@
 package com.github.greennick.properties.android
 
+import android.app.Activity
 import android.view.View
 import com.github.greennick.properties.generic.Property
 import com.github.greennick.properties.subscriptions.ListenableSubscription
@@ -21,9 +22,10 @@ enum class Invisibility(val viewValue: Int) { INVISIBLE(View.INVISIBLE), GONE(Vi
 fun View.bindVisibility(
     property: Property<Boolean>,
     invisibilityMode: Invisibility = Invisibility.GONE
-): ListenableSubscription = property.subscribe {
-    visibility = if (it) View.VISIBLE else invisibilityMode.viewValue
-}
+): ListenableSubscription =
+    property.subscribe {
+        visibility = if (it) View.VISIBLE else invisibilityMode.viewValue
+    }
 
 /**
  * Binds [View] to Property<Boolean>.
@@ -51,4 +53,16 @@ fun View.onLongClick(action: (() -> Unit)? = null) {
             true
         }
     }
+}
+
+fun Activity.onClick(viewId: Int, action: (() -> Unit)? = null) {
+    val found: View = findViewById(viewId)
+        ?: throw IllegalArgumentException("ID does not reference a View inside this Activity $this")
+    found.onClick(action)
+}
+
+fun Activity.onLongClick(viewId: Int, action: (() -> Unit)? = null) {
+    val found: View = findViewById(viewId)
+        ?: throw IllegalArgumentException("ID does not reference a View inside this Activity $this")
+    found.onLongClick(action)
 }
