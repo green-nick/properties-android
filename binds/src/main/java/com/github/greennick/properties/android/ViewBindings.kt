@@ -33,3 +33,22 @@ fun View.bindVisibility(
  */
 fun View.bindEnabled(property: Property<Boolean>): ListenableSubscription =
     property.subscribe(::setEnabled)
+
+fun View.onClick(action: (() -> Unit)? = null) {
+    if (action == null) {
+        setOnClickListener(null)
+    } else {
+        setOnClickListener { action() }
+    }
+}
+
+fun View.onLongClick(action: (() -> Unit)? = null) {
+    if (action == null) {
+        setOnLongClickListener(null)
+    } else {
+        setOnLongClickListener {
+            action()
+            true
+        }
+    }
+}
