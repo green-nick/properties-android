@@ -12,4 +12,3 @@ import com.github.greennick.properties.subscriptions.ListenableSubscription
  */
 fun EditText.bindError(property: Property<CharSequence?>): ListenableSubscription =
     property.subscribe { error = it }
-

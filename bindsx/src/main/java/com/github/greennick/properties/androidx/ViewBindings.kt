@@ -164,3 +164,9 @@ fun Fragment.bindEnabled(
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindEnabled(find<View>(id), property, bindTo)
+
+fun Fragment.onClick(viewId: Int, action: (() -> Unit)? = null): Unit =
+    find<View>(viewId).onClick(action)
+
+fun Fragment.onLongClick(viewId: Int, action: (() -> Unit)? = null): Unit =
+    find<View>(viewId).onLongClick(action)

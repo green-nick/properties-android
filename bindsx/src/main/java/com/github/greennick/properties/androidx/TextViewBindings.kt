@@ -1,5 +1,6 @@
 package com.github.greennick.properties.androidx
 
+import android.text.TextWatcher
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -367,3 +368,9 @@ fun Fragment.bindTextBidirectionally(
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit =
     bindTextBidirectionally(find<TextView>(id), property, bindTo)
+
+fun Fragment.textChanged(viewId: Int, action: (String) -> Unit): TextWatcher =
+    find<TextView>(viewId).textChanged(action)
+
+fun Fragment.actionListener(viewId: Int, listener: (Int) -> Unit): Unit =
+    find<TextView>(viewId).actionListener(listener)
