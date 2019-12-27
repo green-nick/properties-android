@@ -12,7 +12,7 @@ import com.github.greennick.properties.lifecycle.toEvent
  * FragmentActivity section
  */
 
-fun <T> FragmentActivity.bind(
+fun <T> FragmentActivity.bindAdapter(
     property: Property<List<T>>,
     adapter: BoundAdapter<T>,
     event: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
@@ -24,7 +24,7 @@ fun <T> FragmentActivity.bind(
  * Fragment section
  */
 
-fun <T> Fragment.bind(
+fun <T> Fragment.bindAdapter(
     property: Property<List<T>>,
     adapter: BoundAdapter<T>,
     event: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
