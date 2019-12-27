@@ -1,5 +1,6 @@
 package com.github.greennick.properties.android
 
+import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.TextView
@@ -59,19 +60,43 @@ fun TextView.bindTextBidirectionally(property: MutableProperty<String>): Subscri
             text = it
         }
     }
+    val watcher = textChanged { property.value = it }
+    subscription.onUnsubscribe { removeTextChangedListener(watcher) }
+    return subscription
+}
+
+fun TextView.textChanged(action: (String) -> Unit): TextWatcher {
     val watcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable) {
-
-        }
-
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            property.value = s?.toString().orEmpty()
+            action(s?.toString().orEmpty())
+        }
+
+        override fun afterTextChanged(s: Editable) {
+
         }
     }
     addTextChangedListener(watcher)
-    subscription.onUnsubscribe { removeTextChangedListener(watcher) }
-    return subscription
+    return watcher
+}
+
+fun Activity.textChanged(viewId: Int, action: (String) -> Unit): TextWatcher {
+    val found: TextView = findViewById(viewId)
+        ?: throw IllegalArgumentException("ID does not reference a View inside this Activity $this")
+    return found.textChanged(action)
+}
+
+fun TextView.actionListener(listener: (Int) -> Unit) {
+    setOnEditorActionListener { _, actionId, _ ->
+        listener(actionId)
+        true
+    }
+}
+
+fun Activity.actionListener(viewId: Int, listener: (Int) -> Unit) {
+    val found: TextView = findViewById(viewId)
+        ?: throw IllegalArgumentException("ID does not reference a View inside this Activity $this")
+    found.actionListener(listener)
 }

@@ -1,8 +1,8 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "com.github.dcendents.android-maven"
 
-group = 'com.github.green-nick'
+group = "com.github.green-nick"
 
 android {
     compileSdkVersion 28
@@ -22,7 +22,7 @@ android {
 }
 
 repositories {
-    maven { url 'https://jitpack.io' }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -30,7 +30,7 @@ dependencies {
 
     implementation "com.github.green-nick:properties:$properties_version"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation "junit:junit:4.12"
+    androidTestImplementation "com.android.support.test:runner:1.0.2"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
 }
