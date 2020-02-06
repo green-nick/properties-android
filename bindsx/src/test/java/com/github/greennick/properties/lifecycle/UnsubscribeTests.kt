@@ -1,5 +1,6 @@
 package com.github.greennick.properties.lifecycle
 
+import com.github.greennick.properties.androidx.*
 import com.github.greennick.properties.propertyOf
 import org.junit.Test
 
