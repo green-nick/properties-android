@@ -30,7 +30,7 @@ dependencies {
 
     implementation "com.github.green-nick:properties:$properties_version"
 
-    implementation "androidx.lifecycle:lifecycle-runtime:2.1.0"
+    implementation "androidx.lifecycle:lifecycle-runtime:2.2.0"
 
     testImplementation "junit:junit:4.12"
     androidTestImplementation "androidx.test:runner:1.2.0"
