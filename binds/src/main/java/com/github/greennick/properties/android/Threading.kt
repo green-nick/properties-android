@@ -2,7 +2,8 @@ package com.github.greennick.properties.android
 
 import android.os.Handler
 import android.os.Looper
-import com.github.greennick.properties.debounce.*
+import com.github.greennick.properties.debounce.Cancellable
+import com.github.greennick.properties.debounce.Executor
 import com.github.greennick.properties.debouncePropertyOf
 import com.github.greennick.properties.generic.MutableProperty
 
@@ -35,8 +36,12 @@ private class HandlerExecutor(private val handler: Handler) : Executor {
 }
 
 /**
- * Schedule [value] setting to Main UI thread
+ * Schedule [value] to be set into Property on Main UI thread
  */
 fun <T> MutableProperty<T>.postSet(value: T) {
-    mainHandler.post { set(value) }
+    if (Looper.getMainLooper().thread === Thread.currentThread()) {
+        set(value)
+    } else {
+        mainHandler.post { set(value) }
+    }
 }
