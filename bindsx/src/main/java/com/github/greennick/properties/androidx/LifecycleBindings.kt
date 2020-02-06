@@ -1,5 +1,6 @@
-package com.github.greennick.properties.lifecycle
+package com.github.greennick.properties.androidx
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -33,3 +34,5 @@ fun Subscription.toStop(owner: LifecycleOwner): Unit = toEvent(owner, Lifecycle.
  * Bind unsubscribe to onDestroy lifecycle event of Lifecycle owner
  */
 fun Subscription.toDestroy(owner: LifecycleOwner): Unit = toEvent(owner, Lifecycle.Event.ON_DESTROY)
+
+fun Fragment.asLifecycleOwner(): LifecycleOwner = object : LifecycleOwner by this {}

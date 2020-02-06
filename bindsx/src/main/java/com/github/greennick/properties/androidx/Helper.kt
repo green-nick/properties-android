@@ -3,6 +3,7 @@ package com.github.greennick.properties.androidx
 import android.app.Activity
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 
 internal inline fun <reified V : View> Activity.find(id: Int): V {
     val found: View = findViewById(id)
@@ -25,3 +26,5 @@ internal inline fun <reified V : View> Fragment.find(id: Int): V {
         throw ClassCastException("View $found does not correspond required type ${V::class.java}")
     }
 }
+
+internal fun LifecycleOwner.suitableLifecycleOwner() = if (this is Fragment) viewLifecycleOwner else this

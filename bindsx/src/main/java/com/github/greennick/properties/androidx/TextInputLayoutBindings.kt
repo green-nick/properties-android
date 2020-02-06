@@ -2,12 +2,12 @@
 
 package com.github.greennick.properties.androidx
 
+import androidx.core.app.ComponentActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
+import androidx.lifecycle.LifecycleOwner
 import com.github.greennick.properties.generic.Property
-import com.github.greennick.properties.lifecycle.toEvent
 import com.github.greennick.properties.subscriptions.ListenableSubscription
 import com.google.android.material.textfield.TextInputLayout
 
@@ -48,10 +48,6 @@ fun TextInputLayout.bindHintEnabled(property: Property<Boolean>): ListenableSubs
     property.subscribe { isHintEnabled = it }
 
 /**
- * FragmentActivity section
- */
-
-/**
  * Binds [TextInputLayout] to Property<CharSequence?>.
  * @see bindError
  *
@@ -59,13 +55,12 @@ fun TextInputLayout.bindHintEnabled(property: Property<Boolean>): ListenableSubs
  * @param bindTo - lifecycle event for unsubscribe,
  * [Lifecycle.Event.ON_DESTROY] is default
  */
-fun FragmentActivity.bindError(
+fun LifecycleOwner.bindError(
     textInputLayout: TextInputLayout,
     property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    textInputLayout.bindError(property)
-        .toEvent(this, bindTo)
+): Unit = textInputLayout.bindError(property)
+    .toEvent(suitableLifecycleOwner(), bindTo)
 
 /**
  * Binds [TextInputLayout] to Property<Boolean>.
@@ -75,13 +70,12 @@ fun FragmentActivity.bindError(
  * @param bindTo - lifecycle event for unsubscribe,
  * [Lifecycle.Event.ON_DESTROY] is default
  */
-fun FragmentActivity.bindErrorEnabled(
+fun LifecycleOwner.bindErrorEnabled(
     textInputLayout: TextInputLayout,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    textInputLayout.bindErrorEnabled(property)
-        .toEvent(this, bindTo)
+): Unit = textInputLayout.bindErrorEnabled(property)
+    .toEvent(suitableLifecycleOwner(), bindTo)
 
 /**
  * Binds [TextInputLayout] to Property<CharSequence?>.
@@ -91,13 +85,12 @@ fun FragmentActivity.bindErrorEnabled(
  * @param bindTo - lifecycle event for unsubscribe,
  * [Lifecycle.Event.ON_DESTROY] is default
  */
-fun FragmentActivity.bindHint(
+fun LifecycleOwner.bindHint(
     textInputLayout: TextInputLayout,
     property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    textInputLayout.bindHint(property)
-        .toEvent(this, bindTo)
+): Unit = textInputLayout.bindHint(property)
+    .toEvent(suitableLifecycleOwner(), bindTo)
 
 /**
  * Binds [TextInputLayout] to Property<Boolean>.
@@ -107,13 +100,16 @@ fun FragmentActivity.bindHint(
  * @param bindTo - lifecycle event for unsubscribe,
  * [Lifecycle.Event.ON_DESTROY] is default
  */
-fun FragmentActivity.bindHintEnabled(
+fun LifecycleOwner.bindHintEnabled(
     textInputLayout: TextInputLayout,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    textInputLayout.bindHintEnabled(property)
-        .toEvent(this, bindTo)
+): Unit = textInputLayout.bindHintEnabled(property)
+    .toEvent(suitableLifecycleOwner(), bindTo)
+
+/**
+ * Activity section
+ */
 
 /**
  * Looking for [TextInputLayout] by given id and binds it to Property<CharSequence?>.
@@ -127,12 +123,11 @@ fun FragmentActivity.bindHintEnabled(
  * @throws IllegalArgumentException if TextInputLayout with given id isn't found
  * @throws ClassCastException if found View isn't TextInputLayout
  */
-fun FragmentActivity.bindInputLayoutError(
+fun ComponentActivity.bindTextInputLayoutError(
     id: Int,
     property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    bindError(find<TextInputLayout>(id), property, bindTo)
+): Unit = bindError(find<TextInputLayout>(id), property, bindTo)
 
 /**
  * Looking for [TextInputLayout] by given id and binds it to Property<Boolean>.
@@ -146,12 +141,11 @@ fun FragmentActivity.bindInputLayoutError(
  * @throws IllegalArgumentException if TextInputLayout with given id isn't found
  * @throws ClassCastException if found View isn't TextInputLayout
  */
-fun FragmentActivity.bindInputLayoutErrorEnabled(
+fun ComponentActivity.bindTextInputLayoutErrorEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    bindErrorEnabled(find<TextInputLayout>(id), property, bindTo)
+): Unit = bindErrorEnabled(find<TextInputLayout>(id), property, bindTo)
 
 /**
  * Looking for [TextInputLayout] by given id and binds it to Property<CharSequence?>.
@@ -165,12 +159,11 @@ fun FragmentActivity.bindInputLayoutErrorEnabled(
  * @throws IllegalArgumentException if TextInputLayout with given id isn't found
  * @throws ClassCastException if found View isn't TextInputLayout
  */
-fun FragmentActivity.bindInputLayoutHint(
+fun ComponentActivity.bindTextInputLayoutHint(
     id: Int,
     property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    bindHint(find<TextInputLayout>(id), property, bindTo)
+): Unit = bindHint(find<TextInputLayout>(id), property, bindTo)
 
 /**
  * Looking for [TextInputLayout] by given id and binds it to Property<Boolean>.
@@ -184,82 +177,17 @@ fun FragmentActivity.bindInputLayoutHint(
  * @throws IllegalArgumentException if TextInputLayout with given id isn't found
  * @throws ClassCastException if found View isn't TextInputLayout
  */
-fun FragmentActivity.bindInputLayoutHintEnabled(
+fun ComponentActivity.bindTextInputLayoutHintEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    bindHintEnabled(find<TextInputLayout>(id), property, bindTo)
+): Unit = bindHintEnabled(find<TextInputLayout>(id), property, bindTo)
 
 /**
  * Fragment section
  */
 
 /**
- * Binds [TextInputLayout] to Property<CharSequence?>.
- * @see bindError
- *
- * @param property - error text holder
- * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
- * [Lifecycle.Event.ON_DESTROY] is default
- */
-fun Fragment.bindError(
-    textInputLayout: TextInputLayout,
-    property: Property<CharSequence?>,
-    bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    textInputLayout.bindError(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
-
-/**
- * Binds [TextInputLayout] to Property<Boolean>.
- * @see bindErrorEnabled
- *
- * @param property - enabled/disabled error holder
- * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
- * [Lifecycle.Event.ON_DESTROY] is default
- */
-fun Fragment.bindErrorEnabled(
-    textInputLayout: TextInputLayout,
-    property: Property<Boolean>,
-    bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    textInputLayout.bindErrorEnabled(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
-
-/**
- * Binds [TextInputLayout] to Property<CharSequence?>.
- * @see bindHint
- *
- * @param property - hint text holder
- * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
- * [Lifecycle.Event.ON_DESTROY] is default
- */
-fun Fragment.bindHint(
-    textInputLayout: TextInputLayout,
-    property: Property<CharSequence?>,
-    bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    textInputLayout.bindHint(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
-
-/**
- * Binds [TextInputLayout] to Property<Boolean>.
- * @see bindHintEnabled
- *
- * @param property - enabled/disabled hint holder
- * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
- * [Lifecycle.Event.ON_DESTROY] is default
- */
-fun Fragment.bindHintEnabled(
-    textInputLayout: TextInputLayout,
-    property: Property<Boolean>,
-    bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    textInputLayout.bindHintEnabled(property)
-        .toEvent(this.viewLifecycleOwner, bindTo)
-
-/**
  * Looking for [TextInputLayout] by given id and binds it to Property<CharSequence?>.
  * @see bindError
  *
@@ -271,12 +199,11 @@ fun Fragment.bindHintEnabled(
  * @throws IllegalArgumentException if TextInputLayout with given id isn't found
  * @throws ClassCastException if found View isn't TextInputLayout
  */
-fun Fragment.bindInputLayoutError(
+fun Fragment.bindTextInputLayoutError(
     id: Int,
     property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    bindError(find<TextInputLayout>(id), property, bindTo)
+): Unit = bindError(find<TextInputLayout>(id), property, bindTo)
 
 /**
  * Looking for [TextInputLayout] by given id and binds it to Property<Boolean>.
@@ -290,12 +217,11 @@ fun Fragment.bindInputLayoutError(
  * @throws IllegalArgumentException if TextInputLayout with given id isn't found
  * @throws ClassCastException if found View isn't TextInputLayout
  */
-fun Fragment.bindInputLayoutErrorEnabled(
+fun Fragment.bindTextInputLayoutErrorEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    bindErrorEnabled(find<TextInputLayout>(id), property, bindTo)
+): Unit = bindErrorEnabled(find<TextInputLayout>(id), property, bindTo)
 
 /**
  * Looking for [TextInputLayout] by given id and binds it to Property<CharSequence?>.
@@ -309,12 +235,11 @@ fun Fragment.bindInputLayoutErrorEnabled(
  * @throws IllegalArgumentException if TextInputLayout with given id isn't found
  * @throws ClassCastException if found View isn't TextInputLayout
  */
-fun Fragment.bindInputLayoutHint(
+fun Fragment.bindTextInputLayoutHint(
     id: Int,
     property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    bindHint(find<TextInputLayout>(id), property, bindTo)
+): Unit = bindHint(find<TextInputLayout>(id), property, bindTo)
 
 /**
  * Looking for [TextInputLayout] by given id and binds it to Property<Boolean>.
@@ -328,9 +253,8 @@ fun Fragment.bindInputLayoutHint(
  * @throws IllegalArgumentException if TextInputLayout with given id isn't found
  * @throws ClassCastException if found View isn't TextInputLayout
  */
-fun Fragment.bindInputLayoutHintEnabled(
+fun Fragment.bindTextInputLayoutHintEnabled(
     id: Int,
     property: Property<Boolean>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit =
-    bindHintEnabled(find<TextInputLayout>(id), property, bindTo)
+): Unit = bindHintEnabled(find<TextInputLayout>(id), property, bindTo)
