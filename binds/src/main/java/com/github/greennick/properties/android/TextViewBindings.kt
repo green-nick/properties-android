@@ -16,8 +16,8 @@ import com.github.greennick.properties.subscriptions.Subscription
  *
  * @param property - object holder
  */
-fun TextView.bindText(property: Property<Any?>): ListenableSubscription =
-    property.subscribe { text = it?.toString().orEmpty() }
+fun TextView.bindText(property: Property<CharSequence?>): ListenableSubscription =
+    property.subscribe { text = it }
 
 /**
  * Binds [TextView] to Property<Int>.
@@ -25,7 +25,8 @@ fun TextView.bindText(property: Property<Any?>): ListenableSubscription =
  *
  * @param property - string resource id holder
  */
-fun TextView.bindTextId(property: Property<Int>): ListenableSubscription =
+@JvmName("bindTextId")
+fun TextView.bindText(property: Property<Int>): ListenableSubscription =
     property.subscribe { setText(it) }
 
 /**
@@ -43,7 +44,8 @@ fun TextView.bindHint(property: Property<CharSequence?>): ListenableSubscription
  *
  * @param property - string resource id holder
  */
-fun TextView.bindHintId(property: Property<Int>): ListenableSubscription =
+@JvmName("bindHintId")
+fun TextView.bindHint(property: Property<Int>): ListenableSubscription =
     property.subscribe { setHint(it) }
 
 /**

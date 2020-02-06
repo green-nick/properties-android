@@ -12,33 +12,34 @@ import com.github.greennick.properties.generic.MutableProperty
 import com.github.greennick.properties.generic.Property
 
 /**
- * Binds [TextView] to Property<Any?>.
+ * Binds [TextView] to Property<CharSequence?>.
  * @see TextView.bindText
  *
- * @param property - object holder
+ * @param property - string holder
  * @param bindTo - lifecycle event for unsubscribe,
  * [Lifecycle.Event.ON_DESTROY] is default
  */
 fun LifecycleOwner.bindText(
     textView: TextView,
-    property: Property<Any?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = textView.bindText(property)
     .toEvent(suitableLifecycleOwner(), bindTo)
 
 /**
  * Binds [TextView] to Property<Int>.
- * @see TextView.bindTextId
+ * @see TextView.bindText
  *
  * @param property - string resource id holder
  * @param bindTo - lifecycle event for unsubscribe,
  * [Lifecycle.Event.ON_DESTROY] is default
  */
-fun LifecycleOwner.bindTextId(
+@JvmName("bindTextId")
+fun LifecycleOwner.bindText(
     textView: TextView,
     property: Property<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit = textView.bindTextId(property)
+): Unit = textView.bindText(property)
     .toEvent(suitableLifecycleOwner(), bindTo)
 
 /**
@@ -58,17 +59,18 @@ fun LifecycleOwner.bindHint(
 
 /**
  * Binds [TextView] to Property<Int>.
- * @see TextView.bindHintId
+ * @see TextView.bindHint
  *
  * @param property - string resource id holder
  * @param bindTo - lifecycle event for unsubscribe,
  * [Lifecycle.Event.ON_DESTROY] is default
  */
-fun LifecycleOwner.bindHintId(
+@JvmName("bindHintId")
+fun LifecycleOwner.bindHint(
     textView: TextView,
     property: Property<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit = textView.bindHintId(property)
+): Unit = textView.bindHint(property)
     .toEvent(suitableLifecycleOwner(), bindTo)
 
 /**
@@ -91,11 +93,11 @@ fun LifecycleOwner.bindTextBidirectionally(
  */
 
 /**
- * Binds [TextView] to Property<Any?>.
+ * Binds [TextView] to Property<CharSequence?>.
  * @see bindText
  *
  * @param id - [TextView]'s id
- * @param property - object holder
+ * @param property - string holder
  * @param bindTo - lifecycle event for unsubscribe,
  * [Lifecycle.Event.ON_DESTROY] is default
  *
@@ -104,13 +106,13 @@ fun LifecycleOwner.bindTextBidirectionally(
  */
 fun ComponentActivity.bindText(
     id: Int,
-    property: Property<Any?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindText(find<TextView>(id), property, bindTo)
 
 /**
  * Binds [TextView] to Property<Int>.
- * @see TextView.bindTextId
+ * @see TextView.bindText
  *
  * @param id - [TextView]'s id
  * @param property - string resource id holder
@@ -120,11 +122,12 @@ fun ComponentActivity.bindText(
  * @throws IllegalArgumentException if TextView with given id isn't found
  * @throws ClassCastException if found View isn't TextView
  */
-fun ComponentActivity.bindTextId(
+@JvmName("bindTextId")
+fun ComponentActivity.bindText(
     id: Int,
     property: Property<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit = bindTextId(find<TextView>(id), property, bindTo)
+): Unit = bindText(find<TextView>(id), property, bindTo)
 
 /**
  * Binds [TextView] to Property<CharSequence?>.
@@ -146,7 +149,7 @@ fun ComponentActivity.bindHint(
 
 /**
  * Binds [TextView] to Property<Int>.
- * @see TextView.bindHintId
+ * @see TextView.bindHint
  *
  * @param id - [TextView]'s id
  * @param property - string resource id holder
@@ -156,11 +159,12 @@ fun ComponentActivity.bindHint(
  * @throws IllegalArgumentException if TextView with given id isn't found
  * @throws ClassCastException if found View isn't TextView
  */
-fun ComponentActivity.bindHintId(
+@JvmName("bindHintId")
+fun ComponentActivity.bindHint(
     id: Int,
     property: Property<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit = bindHintId(find<TextView>(id), property, bindTo)
+): Unit = bindHint(find<TextView>(id), property, bindTo)
 
 /**
  * Binds [TextView] to MutableProperty<String>.
@@ -185,11 +189,11 @@ fun ComponentActivity.bindTextBidirectionally(
  */
 
 /**
- * Binds [TextView] to Property<Any?>.
+ * Binds [TextView] to Property<CharSequence?>.
  * @see TextView.bindText
  *
  * @param id - [TextView]'s id
- * @param property - object holder
+ * @param property - string holder
  * @param bindTo - lifecycle event of [Fragment.getViewLifecycleOwner] for unsubscribe,
  * [Lifecycle.Event.ON_DESTROY] is default
  *
@@ -198,13 +202,13 @@ fun ComponentActivity.bindTextBidirectionally(
  */
 fun Fragment.bindText(
     id: Int,
-    property: Property<Any?>,
+    property: Property<CharSequence?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindText(find<TextView>(id), property, bindTo)
 
 /**
  * Binds [TextView] to Property<Int>.
- * @see TextView.bindTextId
+ * @see TextView.bindText
  *
  * @param id - [TextView]'s id
  * @param property - string resource id holder
@@ -214,11 +218,12 @@ fun Fragment.bindText(
  * @throws IllegalArgumentException if TextView with given id isn't found
  * @throws ClassCastException if found View isn't TextView
  */
-fun Fragment.bindTextId(
+@JvmName("bindTextId")
+fun Fragment.bindText(
     id: Int,
     property: Property<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit = bindTextId(find<TextView>(id), property, bindTo)
+): Unit = bindText(find<TextView>(id), property, bindTo)
 
 /**
  * Binds [TextView] to Property<CharSequence?>.
@@ -240,7 +245,7 @@ fun Fragment.bindHint(
 
 /**
  * Binds [TextView] to Property<Int>.
- * @see TextView.bindHintId
+ * @see TextView.bindHint
  *
  * @param id - [TextView]'s id
  * @param property - string resource id holder
@@ -250,11 +255,12 @@ fun Fragment.bindHint(
  * @throws IllegalArgumentException if TextView with given id isn't found
  * @throws ClassCastException if found View isn't TextView
  */
-fun Fragment.bindHintId(
+@JvmName("bindHintId")
+fun Fragment.bindHint(
     id: Int,
     property: Property<Int>,
     bindTo: Lifecycle.Event = ON_DESTROY
-): Unit = bindHintId(find<TextView>(id), property, bindTo)
+): Unit = bindHint(find<TextView>(id), property, bindTo)
 
 /**
  * Binds [TextView] to MutableProperty<String>.

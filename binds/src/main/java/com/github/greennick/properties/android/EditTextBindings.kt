@@ -12,3 +12,13 @@ import com.github.greennick.properties.subscriptions.ListenableSubscription
  */
 fun EditText.bindError(property: Property<CharSequence?>): ListenableSubscription =
     property.subscribe { error = it }
+
+/**
+ * Binds [EditText] to Property<Int>.
+ * Uses [EditText.setError]
+ *
+ * @param property - error text id holder
+ */
+@JvmName("bindErrorById")
+fun EditText.bindError(property: Property<Int>): ListenableSubscription =
+    property.subscribe { error = context.getString(it) }
