@@ -1,33 +1,14 @@
 package com.github.greennick.properties.androidx
 
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.github.greennick.properties.android.BoundAdapter
 import com.github.greennick.properties.android.bind
 import com.github.greennick.properties.generic.Property
-import com.github.greennick.properties.lifecycle.toEvent
 
-/**
- * FragmentActivity section
- */
-
-fun <T> FragmentActivity.bindAdapter(
+fun <T> LifecycleOwner.bindAdapter(
     property: Property<List<T>>,
     adapter: BoundAdapter<T>,
     event: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
-) {
-    adapter.bind(property).toEvent(this, event)
-}
-
-/**
- * Fragment section
- */
-
-fun <T> Fragment.bindAdapter(
-    property: Property<List<T>>,
-    adapter: BoundAdapter<T>,
-    event: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
-) {
-    adapter.bind(property).toEvent(this.viewLifecycleOwner, event)
-}
+): Unit = adapter.bind(property)
+    .toEvent(suitableLifecycleOwner(), event)

@@ -55,14 +55,8 @@ fun View.onLongClick(action: (() -> Unit)? = null) {
     }
 }
 
-fun Activity.onClick(viewId: Int, action: (() -> Unit)? = null) {
-    val found: View = findViewById(viewId)
-        ?: throw IllegalArgumentException("ID does not reference a View inside this Activity $this")
-    found.onClick(action)
-}
+fun Activity.onClick(viewId: Int, action: (() -> Unit)? = null): Unit =
+    find<View>(viewId).onClick(action)
 
-fun Activity.onLongClick(viewId: Int, action: (() -> Unit)? = null) {
-    val found: View = findViewById(viewId)
-        ?: throw IllegalArgumentException("ID does not reference a View inside this Activity $this")
-    found.onLongClick(action)
-}
+fun Activity.onLongClick(viewId: Int, action: (() -> Unit)? = null): Unit =
+    find<View>(viewId).onLongClick(action)

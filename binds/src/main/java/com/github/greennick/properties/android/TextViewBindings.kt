@@ -16,8 +16,8 @@ import com.github.greennick.properties.subscriptions.Subscription
  *
  * @param property - object holder
  */
-fun TextView.bindText(property: Property<Any?>): ListenableSubscription =
-    property.subscribe { text = it?.toString().orEmpty() }
+fun TextView.bindText(property: Property<CharSequence?>): ListenableSubscription =
+    property.subscribe { text = it }
 
 /**
  * Binds [TextView] to Property<Int>.
@@ -25,8 +25,9 @@ fun TextView.bindText(property: Property<Any?>): ListenableSubscription =
  *
  * @param property - string resource id holder
  */
-fun TextView.bindTextId(property: Property<Int>): ListenableSubscription =
-    property.subscribe { setText(it) }
+@JvmName("bindTextId")
+fun TextView.bindText(property: Property<Int?>): ListenableSubscription =
+    property.subscribe { if (it != null) setText(it) else text = null }
 
 /**
  * Binds [TextView] to Property<CharSequence?>.
@@ -43,8 +44,9 @@ fun TextView.bindHint(property: Property<CharSequence?>): ListenableSubscription
  *
  * @param property - string resource id holder
  */
-fun TextView.bindHintId(property: Property<Int>): ListenableSubscription =
-    property.subscribe { setHint(it) }
+@JvmName("bindHintId")
+fun TextView.bindHint(property: Property<Int?>): ListenableSubscription =
+    property.subscribe { if (it != null) setHint(it) else text = null }
 
 /**
  * Binds [TextView] to MutableProperty<String>.
@@ -82,21 +84,19 @@ fun TextView.textChanged(action: (String) -> Unit): TextWatcher {
     return watcher
 }
 
-fun Activity.textChanged(viewId: Int, action: (String) -> Unit): TextWatcher {
-    val found: TextView = findViewById(viewId)
-        ?: throw IllegalArgumentException("ID does not reference a View inside this Activity $this")
-    return found.textChanged(action)
-}
+fun Activity.textChanged(viewId: Int, action: (String) -> Unit): TextWatcher =
+    find<TextView>(viewId).textChanged(action)
 
-fun TextView.actionListener(listener: (Int) -> Unit) {
-    setOnEditorActionListener { _, actionId, _ ->
-        listener(actionId)
-        true
+fun TextView.actionListener(listener: ((Int) -> Unit)? = null) {
+    if (listener == null) {
+        setOnEditorActionListener(null)
+    } else {
+        setOnEditorActionListener { _, actionId, _ ->
+            listener(actionId)
+            true
+        }
     }
 }
 
-fun Activity.actionListener(viewId: Int, listener: (Int) -> Unit) {
-    val found: TextView = findViewById(viewId)
-        ?: throw IllegalArgumentException("ID does not reference a View inside this Activity $this")
-    found.actionListener(listener)
-}
+fun Activity.actionListener(viewId: Int, listener: ((Int) -> Unit)? = null): Unit =
+    find<TextView>(viewId).actionListener(listener)
