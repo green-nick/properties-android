@@ -37,7 +37,7 @@ fun LifecycleOwner.bindText(
 @JvmName("bindTextId")
 fun LifecycleOwner.bindText(
     textView: TextView,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = textView.bindText(property)
     .toEvent(suitableLifecycleOwner(), bindTo)
@@ -68,7 +68,7 @@ fun LifecycleOwner.bindHint(
 @JvmName("bindHintId")
 fun LifecycleOwner.bindHint(
     textView: TextView,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = textView.bindHint(property)
     .toEvent(suitableLifecycleOwner(), bindTo)
@@ -125,7 +125,7 @@ fun ComponentActivity.bindText(
 @JvmName("bindTextId")
 fun ComponentActivity.bindText(
     id: Int,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindText(find<TextView>(id), property, bindTo)
 
@@ -162,7 +162,7 @@ fun ComponentActivity.bindHint(
 @JvmName("bindHintId")
 fun ComponentActivity.bindHint(
     id: Int,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindHint(find<TextView>(id), property, bindTo)
 
@@ -221,7 +221,7 @@ fun Fragment.bindText(
 @JvmName("bindTextId")
 fun Fragment.bindText(
     id: Int,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindText(find<TextView>(id), property, bindTo)
 
@@ -258,7 +258,7 @@ fun Fragment.bindHint(
 @JvmName("bindHintId")
 fun Fragment.bindHint(
     id: Int,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindHint(find<TextView>(id), property, bindTo)
 

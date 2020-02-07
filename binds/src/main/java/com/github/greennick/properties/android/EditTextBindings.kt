@@ -20,5 +20,5 @@ fun EditText.bindError(property: Property<CharSequence?>): ListenableSubscriptio
  * @param property - error text id holder
  */
 @JvmName("bindErrorById")
-fun EditText.bindError(property: Property<Int>): ListenableSubscription =
-    property.subscribe { error = context.getString(it) }
+fun EditText.bindError(property: Property<Int?>): ListenableSubscription =
+    property.subscribe { error = if (it != null) context.getString(it) else null }

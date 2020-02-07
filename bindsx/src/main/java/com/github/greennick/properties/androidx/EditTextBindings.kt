@@ -35,7 +35,7 @@ fun LifecycleOwner.bindError(
 @JvmName("bindErrorById")
 fun LifecycleOwner.bindError(
     editText: EditText,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = editText.bindError(property)
     .toEvent(suitableLifecycleOwner(), bindTo)
@@ -77,7 +77,7 @@ fun ComponentActivity.bindError(
 @JvmName("bindErrorById")
 fun ComponentActivity.bindError(
     id: Int,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindError(find<EditText>(id), property, bindTo)
 
@@ -118,6 +118,6 @@ fun Fragment.bindError(
 @JvmName("bindErrorById")
 fun Fragment.bindError(
     id: Int,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindError(find<EditText>(id), property, bindTo)

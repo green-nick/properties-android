@@ -26,8 +26,8 @@ fun TextView.bindText(property: Property<CharSequence?>): ListenableSubscription
  * @param property - string resource id holder
  */
 @JvmName("bindTextId")
-fun TextView.bindText(property: Property<Int>): ListenableSubscription =
-    property.subscribe { setText(it) }
+fun TextView.bindText(property: Property<Int?>): ListenableSubscription =
+    property.subscribe { if (it != null) setText(it) else text = null }
 
 /**
  * Binds [TextView] to Property<CharSequence?>.
@@ -45,8 +45,8 @@ fun TextView.bindHint(property: Property<CharSequence?>): ListenableSubscription
  * @param property - string resource id holder
  */
 @JvmName("bindHintId")
-fun TextView.bindHint(property: Property<Int>): ListenableSubscription =
-    property.subscribe { setHint(it) }
+fun TextView.bindHint(property: Property<Int?>): ListenableSubscription =
+    property.subscribe { if (it != null) setHint(it) else text = null }
 
 /**
  * Binds [TextView] to MutableProperty<String>.

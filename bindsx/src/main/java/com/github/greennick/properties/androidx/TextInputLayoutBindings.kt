@@ -27,8 +27,8 @@ fun TextInputLayout.bindError(property: Property<CharSequence?>): ListenableSubs
  * @param property - error text id holder
  */
 @JvmName("bindErrorById")
-fun TextInputLayout.bindError(property: Property<Int>): ListenableSubscription =
-    property.subscribe { error = context.getString(it) }
+fun TextInputLayout.bindError(property: Property<Int?>): ListenableSubscription =
+    property.subscribe { error = if (it != null) context.getString(it) else null }
 
 /**
  * Binds [TextInputLayout] to Property<Boolean>.
@@ -55,8 +55,8 @@ fun TextInputLayout.bindHint(property: Property<CharSequence?>): ListenableSubsc
  * @param property - hint text id holder
  */
 @JvmName("bindHintById")
-fun TextInputLayout.bindHint(property: Property<Int>): ListenableSubscription =
-    property.subscribe { hint = context.getString(it) }
+fun TextInputLayout.bindHint(property: Property<Int?>): ListenableSubscription =
+    property.subscribe { hint = if (it != null) context.getString(it) else null }
 
 /**
  * Binds [TextInputLayout] to Property<Boolean>.
@@ -93,7 +93,7 @@ fun LifecycleOwner.bindError(
 @JvmName("bindErrorById")
 fun LifecycleOwner.bindError(
     textInputLayout: TextInputLayout,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = textInputLayout.bindError(property)
     .toEvent(suitableLifecycleOwner(), bindTo)
@@ -139,7 +139,7 @@ fun LifecycleOwner.bindHint(
 @JvmName("bindHintById")
 fun LifecycleOwner.bindHint(
     textInputLayout: TextInputLayout,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = textInputLayout.bindHint(property)
     .toEvent(suitableLifecycleOwner(), bindTo)
@@ -196,7 +196,7 @@ fun ComponentActivity.bindTextInputLayoutError(
 @JvmName("bindTextInputLayoutErrorById")
 fun ComponentActivity.bindTextInputLayoutError(
     id: Int,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindError(find<TextInputLayout>(id), property, bindTo)
 
@@ -251,7 +251,7 @@ fun ComponentActivity.bindTextInputLayoutHint(
 @JvmName("bindTextInputLayoutHintById")
 fun ComponentActivity.bindTextInputLayoutHint(
     id: Int,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindHint(find<TextInputLayout>(id), property, bindTo)
 
@@ -310,7 +310,7 @@ fun Fragment.bindTextInputLayoutError(
 @JvmName("bindTextInputLayoutErrorById")
 fun Fragment.bindTextInputLayoutError(
     id: Int,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindError(find<TextInputLayout>(id), property, bindTo)
 
@@ -365,7 +365,7 @@ fun Fragment.bindTextInputLayoutHint(
 @JvmName("bindTextInputLayoutHintById")
 fun Fragment.bindTextInputLayoutHint(
     id: Int,
-    property: Property<Int>,
+    property: Property<Int?>,
     bindTo: Lifecycle.Event = ON_DESTROY
 ): Unit = bindHint(find<TextInputLayout>(id), property, bindTo)
 
