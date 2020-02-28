@@ -7,7 +7,108 @@ Main purpose is binding `Views` to `ViewModels` in MVVM patterns.
 There is main project called `binds` and extensions: `bindsx` and `livedata`
 which supports androidx views, Jetpack Lifecycle bindings and Livedata fields.
 
+## `bindsx` Module
+I would recommend you to take `bindsx` module If you use AppCompat/Jetpack components in your application.  
+It is more convenient to use because of main advantage - automatic lifecycle handling.
+
+### View binding:
+```
+class LoginViewModel {
+    val email = propertyOf("")
+    val emailEnabled = propertyOf(true)
+    val password = propertyOf("")
+    ...
+}
+
+class LoginActivity : AppCompatActivity() {
+    val vm: LoginViewModel = ...
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        ...
+        val emailField: EditText = findViewById(R.id.email)
+
+        bindEnabled(emailField, vm.emailEnabled)
+        bindTextBidirectionally(emailField, vm.email)
+
+        //or even by View's id only!
+        bindTextBidirectionally(R.id.password, password)
+    }
+}
+```
+There are few differences between these bindings and from `binds` module:
+1. Automatic subscription handling.
+2. Ability to pass only View's id instead of View.
+3. Fragments support.
+4. Support of Snackbar and TextInputLayout bindings from Material library.
+
+**Pay attention**  
+If you want to use binding by View's id - it will throw exception if
+View with given id won't be found in Activity/Fragment or it has inappropriate type.
+
+### Lifecycle handling
+
+All bindings from this module that receives Views as parameters are extensions of `LifecycleOwner`.  
+Therefore, they "know" when unsubscribe. By default this will be happened on `ON_DESTROY` event\*.  
+But you can override this behaviour by passing desired event into `bind...` method:
+```
+bindEnabled(emailField, vm.emailEnabled, Lifecycle.Event.ON_STOP)
+```
+In this case, subscription will be cancelled when `ON_STOP` event happens.
+
+\* -  If given `LifecycleOwner` is Fragment, binding will use it's `viewLifecycleOwner` instead of Fragment itself.  
+That's because Fragment's lifecycle is wider, than lifecycle of it's Views.  
+If by some reason you need to use Fragment as actual LifecycleOwner, please use `asLifecycleOwner()` extension:
+```
+class LoginFragment: Fragment() {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val emailField: EditText = view.findViewById(R.id.email)
+
+        asLifecycleOwner().bindEnabled(emailField, vm.emailEnabled)
+    }
+}
+```
+Bindings that receives View's id are extensions of ComponentActivity/Fragment,
+so they are also able to handle lifecycle itself.
+
+Besides that, if you want to use bindings from `binds` module,
+you can simplify lifecycle handling by using these extensions of Subscription object:
+```
+toEvent(LifecycleOwner, Lifecycle.Event)
+
+toPause(LifecycleOwner)
+
+toStop(LifecycleOwner)
+
+toDestroy(LifecycleOwner)
+```
+For example:
+```
+class LoginActivity : Activity() {
+    val vm: LoginViewModel = ...
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        ...
+        val emailField: EditText = findViewById(R.id.email)
+
+        emailField.bindEnabled(vm.emailEnabled).toDestroy(this)
+        emailField.bindTextBidirectionally(vm.email).toEvent(this, Lifecycle.Event.ON_PAUSE)
+    }
+}
+```
+These bindings will unsubscribe automatically, when given event happens.
+
+### Additions
+There are few additions in this module that could be useful:
+
+1. `bind`, `bindNonNull`, `bindOnTrue`, `bindOnFalse` - similar to generic extensions from `Property` library, but lifecycle-aware.
+2. `onclick` and `onLongClick` - the same as below in `binds` module but for Fragments.
+3. `textChanged` - the same as below in `binds` module but for Fragments.
+4. `actionListener` - the same as below in `binds` module but for Fragments.
+
 ## `binds` Module
+If you don't want to use AppCompat or cannot by some reason, you always can use this module for binding.  
+But it requires you a little bit more attention for handling lifecycle properly.
 ### View binding:
 ```
 class LoginViewModel {
@@ -18,17 +119,19 @@ class LoginViewModel {
 
 class LoginActivity : Activity() {
     val vm: LoginViewModel = ...
-    
-    // somewhere in onCreate
-    
-    val emailField: EditText = findViewById(R.id.email)
-    
-    emailField.bindEnabled(vm.emailEnabled)
-    emailField.bindTextBidirectionally(vm.email)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        ...
+        val emailField: EditText = findViewById(R.id.email)
+
+        emailField.bindEnabled(vm.emailEnabled)
+        emailField.bindTextBidirectionally(vm.email)
+    }
 }
 ```
 After these bindings, our email EditText will respond on changes of `email` and `emailEnabled` properties.  
-`bindTextBidirectionally` is two-way binding, so it will change View's attribute and will be changed itself when User enter the text to field.
+`bindTextBidirectionally` is two-way binding, so it will change View's attribute and will be changed itself  
+when User enter the text to field.
 
 ### Lifecycle handling
 
@@ -44,14 +147,16 @@ class LoginActivity : Activity() {
     val vm: LoginViewModel = ...
     var subscription: Subscription? = null
 
-    // somewhere in onCreate
+    override fun onCreate(savedInstanceState: Bundle?) {
+        ...
+        val emailField: TextView = findViewById(R.id.user_email)
 
-    val emailField: TextView = findViewById(R.id.user_email)
-
-    subscription = emailField.bindTextBidirectionally(vm.email)
+        subscription = emailField.bindTextBidirectionally(vm.email)
+    }
 
     override fun onDestroy() {
         subscription?.unsubscribe() // this will prevent from memory leaks
+        super.onDestroy()
     }
 }
 ```
@@ -72,99 +177,50 @@ There are few additions in this module that could be useful:
 
 1. `debouncePropertyOf` based on Handler with Main Looper (Handler could be changed).
 2. `postSet` extension function of MutableProperty that will set given value on UI Thread only, no matter where has it been called.
-3. `onclick` and `onLongClick` extensions of View and Activity. Allows you to set lambda-callbacks without View parameter. Version for Activity allows to pass only View's id instead of View itself.
+3. `onСlick` and `onLongClick` extensions of View and Activity. Allows you to set lambda-callbacks without View parameter. Version for Activity allows to pass only View's id instead of View itself.
 4. `BoundAdapter` - for nicer binding any Adapter to Property which contains List of items.
 5. `textChanged` extension of TextView and Activity. Simpler analog of TextWatcher::onTextChanged. Version for Activity allows to pass only TextView's id instead of View itself.
 6. `actionListener` extension of TextView and Activity. Simpler analog of OnEditorActionListener. Version for Activity allows to pass only TextView's id instead of View itself.
 
-## `bindsx` Module
-### View binding:
-```
-class LoginViewModel {
-    val email = propertyOf("")
-    val emailEnabled = propertyOf(true)
-    val password = propertyOf("")
-    ...
-}
+## Extension
+This library provides only very basic bindings for the most common Views out of the box.  
+As it doesn't use code generation, you have to add missing bindings by yourself.  
+This could be done only in few lines of code.  
+Anyway, If you believe that some binding should be in the library - feel fre to open the Issue.
 
-class LoginActivity : AppCompatActivity() {
-    val vm: LoginViewModel = ...
-    
-    // somewhere in onCreate
-    
-    val emailField: EditText = findViewById(R.id.email)
-    
-    bindEnabled(emailField, vm.emailEnabled)
-    bindTextBidirectionally(emailField, vm.email)
-    
-    bindTextBidirectionally(R.id.password, password)
+####  Example of custom binding
+Let's imagine you have some custom `IndicatorView` that represents some selected indicator
+and it has method `setIndicatorPosition` that allows you to set it:
+```
+class IndicatorView(context: Context) : View(context) {
+
+    fun getIndicatorPosition(): Int {...}
+
+    fun setIndicatorPosition(position: Int) {...}
 }
 ```
-There are few differences between these bindings and from `binds` module:
-1. Automatic subscription handling.
-2. Ability to pass only View's id instead of View.
-3. Fragments support.
-4. Support of Snackbar and TextInputLayout bindings from Material library.
+And you want to add binding support to this value.  
+First of all, you have to decide, which Property should you use for binding.  
+As this View works with Int as position, you'd better choose `Property<Int>`.
 
-**Pay attention**  
-If you want to use binding by View's id - it will throw exception if View with given id won't be found in Activity/Fragment or it has inappropriate type.
-
-### Lifecycle handling
-
-All bindings from this module that receives Views as parameters are extensions of `LifecycleOwner`.  
-Therefore, they "know" when unsubscribe. By default this will be happened on `ON_DESTROY` event\*.  
-But you can override this behaviour by passing desired event into `bind...` method:
+After that, implementation will differ depends on which module do you prefer to use - `binds` or `bindsx`  
+`binds`-like way:
 ```
-bindEnabled(emailField, vm.emailEnabled, Lifecycle.Event.ON_STOP)
+fun IndicatorView.bindIndicatorPosition(property: Property<Int>) =
+    property.subscribe(::setIndicatorPosition)
 ```
-In this case, subscription will be cancelled when `ON_STOP` event happens.
+And actually that's all!  
+Just Two lines of code (or even one) and you can use this binding as well as others.
 
-\* -  If given `LifecycleOwner` is Fragment, binding will use it's `viewLifecycleOwner` instead of Fragment itself.  
-That's because Fragment's lifecycle is wider, than lifecycle of it's Views.  
-If by some reason you need to use Fragment as actual LifecycleOwner, please use `asLifecycleOwner()` extension:
+It will look a bit different for `bindsx`-like:
 ```
-class LoginFragment: Fragment() {
-    
-    // somewhere in onViewCreated
-
-    val emailField: EditText = view.findViewById(R.id.email)
-
-    asLifecycleOwner().bindEnabled(emailField, vm.emailEnabled)
-}
+fun LifecycleOwner.bindIndicatorPosition(
+    indicator: IndicatorView,
+    property: Property<Int>,
+    bindTo: Lifecycle.Event = ON_DESTROY // add this only if you want to customize time of unsubscribe
+) = bind(property, bindTo, indicator::setIndicatorPosition) // or use without bindTo if you don't care
 ```
-
-Besides that, if you're using bindings from `binds` module, you can also simplify lifecycle handling by using these extensions of Subscription object:
-```
-toEvent(LifecycleOwner, Lifecycle.Event)
-
-toPause(LifecycleOwner)
-
-toStop(LifecycleOwner)
-
-toDestroy(LifecycleOwner)
-```
-For example:
-```
-class LoginActivity : AppCompatActivity() {
-    val vm: LoginViewModel = ...
-    
-    // somewhere in onCreate
-    
-    val emailField: EditText = findViewById(R.id.email)
-    
-    emailField.bindEnabled(vm.emailEnabled).toDestroy(this)
-    emailField.bindTextBidirectionally(vm.email).toDestroy(this)
-}
-```
-These bindings will unsubscribe automatically, when `ON_DESTROY` event happens.
-
-### Additions
-There are few additions in this module that could be useful:
-
-1. `bind`, `bindNonNull`, `bindOnTrue`, `bindOnFalse` - similar to generic extensions from `Property` library, but lifecycle-aware.
-2. `onclick` and `onLongClick` - the same as above in `binds` module but for Fragments.
-3. `textChanged` - the same as above in `binds` module but for Fragments.
-4. `actionListener` - the same as above in `binds` module but for Fragments.
+A bit more lines of code but still as simple as previous version.
 
 ## List of available bindings:
 | View type       | Binding name                  | Module        | Binding direction | Property                  | Comments                                                              |
