@@ -3,6 +3,8 @@
 Small, lightweight library that allows binding Android views and dialogs to Properties.
 Main purpose is binding `Views` to `ViewModels` in MVVM patterns.
 
+Usage in real project: [Karbon](https://gitlab.com/greennick/karbon)
+
 ## Structure:
 There is main project called `binds` and extensions: `bindsx` and `livedata`
 which supports androidx views, Jetpack Lifecycle bindings and Livedata fields.
@@ -220,7 +222,7 @@ fun LifecycleOwner.bindIndicatorPosition(
     bindTo: Lifecycle.Event = ON_DESTROY // add this only if you want to customize time of unsubscribe
 ) = bind(property, bindTo, indicator::setIndicatorPosition) // or use without bindTo if you don't care
 ```
-A bit more lines of code but still as simple as previous version.
+A bit more lines of code but still as simple as previous version and Lifecycle-aware.
 
 ## List of available bindings:
 | View type       | Binding name                  | Module        | Binding direction | Property                  | Comments                                                              |
